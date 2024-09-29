@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'choose_plan.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   final String phoneNumber;
@@ -95,6 +96,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 // Handle OTP submission
                 String otp = otpControllers.map((controller) => controller.text).join();
                 print("Entered OTP: $otp");
+                // Redirect to the login page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChoosePlan(), // Navigate to LoginScreen
+                  ),
+                );
               },
               child: const Text('Login'),
             ),
