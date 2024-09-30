@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
-import 'screen/get_started.dart'; // Import the new screen
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
+import 'screen/get_started.dart'; // Import your new screen
 import 'screen/login.dart';
-void main() {
+
+void main() async {
+  // Ensure that plugin services are initialized before Firebase initialization
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Firebase
+  await Firebase.initializeApp();
+
+  // Run the Flutter app
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
