@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   font_awesome_flutter: ^10.1.0
+  image_picker: ^0.8.5+3
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:
@@ -25,3 +27,6 @@ flutter:
     - lib/assets/chef.png  # Ensure this path is correct
     - lib/assets/google_icon.png
     - lib/assets/facebook_icon.png
+    - lib/assets/home_logo.png
+    - lib/assets/dish_image.png
+    - lib/assets/profile_image.png
