@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const GetStartedScreen(), // Starting point of the app
+      home: GetStartedScreen(), // Starting point of the app
     );
   }
 }
