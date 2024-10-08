@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:user_application/constants/colors.dart';
+import 'package:user_application/screen/delivery_location.dart';
 import 'package:user_application/screen/order_sucessful.dart';
 
 void main() {
@@ -11,64 +13,136 @@ class Order extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Order Screen'),
+          title: Text(
+            'Payment', // Modified title
+            style: TextStyle(
+              fontSize: 20, // Modify title size
+              fontWeight: FontWeight.bold, // Modify title weight
+              color: Colors.black, // Modify title color
+            ),
+          ),
+          leading: IconButton(
+            icon:
+                Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+            onPressed: () {
+              Navigator.pop(
+                  context); // Action to go back to the previous screen
+            },
+          ),
+          backgroundColor: Colors.white, // Customize the AppBar color
+          foregroundColor: Colors.black,
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Card(
-                elevation: 4, // Adds shadow to give elevation effect
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // Rounded corners
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0), // Reduced padding inside the card
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min, // Minimize height of the column
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Order Details',
-                            style: TextStyle(fontSize: 16), // Slightly smaller text
+              Container(
+                width: double.infinity, // Set width to match parent
+                height: 130, // Set your desired height
+                child: Card(
+                  elevation: 4, // Adds shadow to give elevation effect
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                        12.0), // Reduced padding inside the card
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize:
+                          MainAxisSize.min, // Minimize height of the column
+                      children: [
+                        // Your Row wrapped in GestureDetector for navigation
+                        GestureDetector(
+                          onTap: () {
+                            // Navigate to another page
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DeliveryLocation()), // Replace with your destination page
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Add Location',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Container(
+                                width:
+                                    40, // Container size (should be larger than the icon)
+                                height: 40, // Height of the container
+                                decoration: BoxDecoration(
+                                  color: Colors.yellow, // Yellow background
+                                  shape: BoxShape.circle, // Circular shape
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    'lib/assets/location.png', // Path to your asset icon
+                                    width: 20, // Icon width
+                                    height: 20, // Icon height
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          Icon(Icons.shopping_cart, size: 20), // Smaller icon
-                        ],
-                      ),
-                      SizedBox(height: 8), // Reduced spacing between elements
-                      Divider(
-                        color: Colors.black,
-                        thickness: 1,
-                      ),
-                      SizedBox(height: 8), // Reduced spacing after the divider
-                      
-                      // Icon and text row after the divider
-                      Row(
-                        children: [
-                          Icon(Icons.check_circle, size: 20), // Smaller icon
-                          SizedBox(width: 6), // Reduced space between icon and text
-                          Text(
-                            'Order Confirmed',
-                            style: TextStyle(fontSize: 14), // Slightly smaller text
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                        SizedBox(height: 8), // Reduced spacing between elements
+                        Divider(
+                          color: Colors.black,
+                          thickness: 1,
+                        ),
+                        SizedBox(
+                            height: 8), // Reduced spacing after the divider
+
+                        // Icon and text row after the divider
+                        Row(
+                          children: [
+                            Image.asset(
+                              'lib/assets/location_history.png', // Path to your asset icon
+                              width: 20, // Set width
+                              height: 20, // Set height
+                            ),
+                            SizedBox(
+                                width:
+                                    6), // Reduced space between icon and text
+                            Text(
+                              'Kalyani, west bengal',
+                              style: TextStyle(
+                                  fontSize: 14), // Slightly smaller text
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 16), // Spacing between the card and the "Order Summary" text
-              
-              // Text for Order Summary
-              Text(
-                'Order Summary',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), // Bold and larger text
+
+              SizedBox(
+                  height:
+                      25), // Spacing between the card and the "Order Summary" text
+
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0), // Left and right margin
+                child: Text(
+                  'Order Summary',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold, // Bold and larger text
+                  ),
+                ),
               ),
-              SizedBox(height: 16), // Spacing before the summary box
+
+              SizedBox(height: 5), // Spacing before the summary box
 
               // Single box for order item
               Container(
@@ -93,11 +167,11 @@ class Order extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Left Aligned Text 1',
+                          'Sub Total Price',
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          'Right Aligned Text 1',
+                          '\$ 9.2',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -108,11 +182,11 @@ class Order extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Left Aligned Text 2',
+                          'Coupon',
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          'Right Aligned Text 2',
+                          'None',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
@@ -123,17 +197,18 @@ class Order extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Left Aligned Text 3',
+                          'Delivery Charges',
                           style: TextStyle(fontSize: 16),
                         ),
                         Text(
-                          'Right Aligned Text 3',
+                          '\$ 10',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
                     SizedBox(height: 8), // Spacing before the divider
-                    Divider( // Horizontal border
+                    Divider(
+                      // Horizontal border
                       color: Colors.black,
                       thickness: 1,
                     ),
@@ -144,12 +219,18 @@ class Order extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Left Aligned Text 4',
-                          style: TextStyle(fontSize: 16),
+                          'Total',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         Text(
-                          'Right Aligned Text 4',
-                          style: TextStyle(fontSize: 16),
+                          '\$19.2',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                       ],
                     ),
@@ -170,13 +251,22 @@ class Order extends StatelessWidget {
                   },
                   child: Text('Pay Now'),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16), // Button padding
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // Rounded corners for button
+                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.primaryColor,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30.0, vertical: 10.0),
+                    minimumSize: const Size(330, 50),
+                    elevation: 5.0,
+                  ).copyWith(
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 20),
             ],
           ),
         ),
@@ -184,4 +274,3 @@ class Order extends StatelessWidget {
     );
   }
 }
-

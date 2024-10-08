@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'screen/get_started.dart'; // Import the new screen
+import 'package:user_application/screen/login.dart';
+
 void main() {
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GetStartedScreen(), // Starting point of the app
+      home: LoginScreen(), // Starting point of the app
     );
   }
 }

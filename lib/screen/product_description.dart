@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:user_application/constants/colors.dart';
+import 'package:user_application/screen/cart.dart';
 
 class ProductDescription extends StatefulWidget {
+  final int index;
+
+  // Constructor to accept index
+  ProductDescription({Key? key, required this.index}) : super(key: key);
+
   @override
   _ProductDescriptionState createState() => _ProductDescriptionState();
 }
@@ -11,86 +18,184 @@ class _ProductDescriptionState extends State<ProductDescription> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product Description'),
-      ),
+      appBar: null,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Center(
-                child: Image.asset(
-                  'assets/your_image.png', // Replace with your image path
-                  width: 150,
-                  height: 150,
+              // Single Image that is attached to the top, left, and right
+              Container(
+                height: 350, // Adjust height as necessary
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'lib/assets/product_description.png'), // Replace with your image path
+                    fit: BoxFit.cover, // Adjust the fit
+                  ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                'This is a text below the image',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              // Container for the yellow background text
+              Container(
+                height: 40, // Set the height for the container
+                width:
+                    double.infinity, // Make the container span the full width
+                color: Colors.yellow, // Background color
+                alignment: Alignment.centerLeft, // Align text to the left
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0), // Add horizontal padding for spacing
+                  child: Text(
+                    'Fresh Fruits',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                    textAlign:
+                        TextAlign.start, // Align text to the start (left)
+                  ),
+                ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 12),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0), // Adjust horizontal padding as needed
+                child: Text(
+                  'Fuji Apple',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 10),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceEvenly, // Distribute buttons evenly
                 children: [
-                  ElevatedButton(onPressed: () {}, child: Text('Variant 1')),
-                  ElevatedButton(onPressed: () {}, child: Text('Variant 2')),
-                  ElevatedButton(onPressed: () {}, child: Text('Variant 3')),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('2 pieces (300 - 350 g)'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.transparent, // Text color
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5), // Button size
+                      textStyle: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold), // Text size and style
+                      elevation: 0, // No shadow
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('3 pieces (350 - 400 g)'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      textStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      elevation: 0,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: Text('4 pieces (500 g)'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      textStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+                      elevation: 0,
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              Text(
-                '\$99.99', // Replace with actual price
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green,
-                ),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {
-                  // Add to Cart action
-                },
+
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0), // Same horizontal padding for price
                 child: Text(
-                  'Add to Cart',
-                  style: TextStyle(fontSize: 18),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  backgroundColor: Colors.orange,  // Replaces 'primary'
-                  foregroundColor: Colors.white,    // Replaces 'onPrimary'
+                  '\$99.99', // Replace with actual price
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               SizedBox(height: 30),
 
-              // First text: "Description"
-              Text(
-                'Description',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              // Center the "Add to Cart" button
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Add to Cart action
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  Cart()), // Replace with your actual page
+                        );
+                  },
+                  child: Text(
+                    'Add to Cart',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
+                    backgroundColor:
+                        AppColors.primaryColor, // Button background color
+                    foregroundColor: Colors.white, // Text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          8), // Adjust this value to reduce the curve
+                    ),
+                  ),
                 ),
               ),
 
-              // Second text with "See More" functionality
+              SizedBox(height: 30),
+
+              // First text: "Description" with padding
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Description',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
               LayoutBuilder(
                 builder: (context, constraints) {
-                  String descriptionText = 'This is the detailed description of the product. '
+                  String descriptionText =
+                      'This is the detailed description of the product. '
                       'It can be very long, and the user can choose to see more if the text is too long to display. '
                       'This description explains everything about the product in detail.';
-                  
+
                   // Check if text exceeds 2 lines (around 80 characters here)
-                  final textWidget = Text(
-                    descriptionText,
-                    maxLines: isExpanded ? null : 2,
-                    overflow: isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
+                  final textWidget = Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0), // Add padding here too
+                    child: Text(
+                      descriptionText,
+                      maxLines: isExpanded ? null : 2,
+                      overflow: isExpanded
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 16, // Modify text size
+                        color: Colors.black, // Modify text color
+                      ),
+                    ),
                   );
-                  
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -104,153 +209,88 @@ class _ProductDescriptionState extends State<ProductDescription> {
                                 isExpanded = true;
                               });
                             },
-                            child: Text('See More'),
+                            child: Text(
+                              'See More',
+                              style: TextStyle(
+                                fontSize: 18, // Modify "See More" text size
+                                color: Colors
+                                    .black, // Modify "See More" text color
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                     ],
                   );
                 },
               ),
-              SizedBox(height: 30),
+
+              SizedBox(height: 20),
 
               // "Features Product" section
-              Text(
-                'Features Product',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  'Features Product',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
 
               SizedBox(height: 20),
 
-              // Horizontal scrollable list of products (5 products with image and add button)
               Container(
-                height: 180, // Fixed height to ensure all items fit
-                child: ListView(
-                  scrollDirection: Axis.horizontal, // Enables horizontal scrolling
-                  children: [
-                    // Product 1
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/product1.png', // Replace with your product image path
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add to Cart action for Product 1
-                          },
-                          child: Text('Add'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
+                height: 200, // Adjusted height to accommodate image and button
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16), // Padding for the list
+                child: ListView.builder(
+                  scrollDirection:
+                      Axis.horizontal, // Enables horizontal scrolling
+                  itemCount: 5, // Number of product items
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          right: 20), // Space between products
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                                12), // Small curve on the image
+                            child: Image.asset(
+                              'lib/assets/product_description.png', // Replace with your product image path
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 20), // Space between products
-
-                    // Product 2
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/product2.png', // Replace with your product image path
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add to Cart action for Product 2
-                          },
-                          child: Text('Add'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
+                          // Space between image and button
+                          ElevatedButton(
+                            onPressed: () {
+                              // Add to Cart action
+                            },
+                            child: Text('Add'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors
+                                  .white, // White background for the button
+                              foregroundColor: Colors.black, // Text color
+                              side: BorderSide(
+                                  color: Colors.yellow,
+                                  width: 2), // Yellow border
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    8), // Rounded corners for the button
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 20), // Space between products
-
-                    // Product 3
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/product3.png', // Replace with your product image path
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add to Cart action for Product 3
-                          },
-                          child: Text('Add'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 20), // Space between products
-
-                    // Product 4
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/product4.png', // Replace with your product image path
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add to Cart action for Product 4
-                          },
-                          child: Text('Add'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 20), // Space between products
-
-                    // Product 5
-                    Column(
-                      children: [
-                        Image.asset(
-                          'assets/product5.png', // Replace with your product image path
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add to Cart action for Product 5
-                          },
-                          child: Text('Add'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    );
+                  },
                 ),
-              ),
+              )
             ],
           ),
         ),

@@ -15,7 +15,7 @@ dependencies:
   image_picker: ^0.8.5+3
   permission_handler: ^11.3.1
   video_player: ^2.4.5
-  youtube_player_flutter: ^8.1.0
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
@@ -34,3 +34,19 @@ flutter:
     - lib/assets/profile_image.png
     - lib/assets/done_right.png
     - lib/assets/product_description.png
+    - lib/assets/green_tick.png
+    - lib/assets/home.png
+    - lib/assets/add.png
+    - lib/assets/profile.png
+    - lib/assets/search.png
+    - lib/assets/cart.png
+    - lib/assets/search_arrow.png
+    - lib/assets/cart_image.png
+    - lib/assets/location.png
+    - lib/assets/logout.png
+    - lib/assets/order_history.png
+    - lib/assets/feedback.png
+    - lib/assets/save_payment.png
+    - lib/assets/your_video.png
+    - lib/assets/location_history.png
+    

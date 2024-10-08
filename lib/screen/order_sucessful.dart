@@ -7,19 +7,41 @@ class OrderSucessful extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Image and Texts')),
+        appBar: null,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200,
-                height: 200,
-                child: Image.asset('lib/assets/done_right.png'), // Use the image from assets
+                width: 250,
+                height: 250,
+                child: Image.asset(
+                    'lib/assets/done_right.png'), // Use the image from assets
               ),
               SizedBox(height: 20),
-              Text('Order Sucessful', style: TextStyle(fontSize: 24)),
-              Text('Thank you for your order. Your order will be delivered within 1-2 days ', style: TextStyle(fontSize: 18)),
+              Text(
+                'Order Successful',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0), // Left and right margin
+                child: Center(
+                  child: Text(
+                    'Thank you for your order. Your order will be delivered within 1-2 days.',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                    textAlign:
+                        TextAlign.center, // Ensure the text itself is centered
+                  ),
+                ),
+              ),
             ],
           ),
         ),

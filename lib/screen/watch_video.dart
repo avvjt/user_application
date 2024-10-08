@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart'; // For video playback
+import 'package:user_application/constants/colors.dart';
+import 'package:user_application/screen/product_description.dart';
+import 'package:video_player/video_player.dart';
 
 class WatchVideo extends StatefulWidget {
   @override
@@ -9,15 +11,22 @@ class WatchVideo extends StatefulWidget {
 class _WatchVideoState extends State<WatchVideo> {
   late VideoPlayerController _controller;
   List<int> _quantities = List.generate(3, (index) => 0); // Quantity for each product
+  final TextEditingController _commentController = TextEditingController();
+  final List<Comment> _comments = [];
+
+  // Static description text
+  final String _description =
+      "This is a sample description that is quite long and will be shown partially until the user clicks 'Show More'.";
+
+  bool _showFullDescription = false; // Control the visibility of the full description
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse('https://www.youtube.com/watch?v=3cQLwytjuBU'), // Replace with actual video URL
-    )
-      ..initialize().then((_) {
-        setState(() {});  // Update UI after video initialization
+    _controller = VideoPlayerController.network(
+      'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    )..initialize().then((_) {
+        setState(() {});
       });
   }
 
@@ -27,12 +36,23 @@ class _WatchVideoState extends State<WatchVideo> {
     super.dispose();
   }
 
+  void _addComment() {
+    if (_commentController.text.isNotEmpty) {
+      setState(() {
+        _comments.add(Comment(
+          userProfileImage: 'lib/assets/profile_image.png',
+          commentText: _commentController.text,
+          postedDate: DateTime.now(),
+        ));
+        _commentController.clear();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Watch Video'),
-      ),
+      appBar: null,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,116 +68,183 @@ class _WatchVideoState extends State<WatchVideo> {
             ),
             SizedBox(height: 16),
 
-            // Video title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Sample Video Title',  // Replace with actual video title
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: 10),
-
-            // User's name and publishing time
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: AssetImage('assets/profile_pic.png'),  // User's profile picture
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Video Title Text with Padding
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    "Vegetable salad | Healthy Diet",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'User Name',  // Replace with actual user name
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        'Published 2 days ago',  // Replace with actual publishing time
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
+                ),
+                SizedBox(height: 8),
 
-            // Comment Section Title
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Comments',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            SizedBox(height: 10),
-
-            // Comments List
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  CommentWidget(
-                    username: 'John Doe',
-                    comment: 'Great video! I learned a lot.',
-                    time: '5 hours ago',
-                  ),
-                  Divider(),
-                  CommentWidget(
-                    username: 'Jane Smith',
-                    comment: 'This was really helpful, thanks!',
-                    time: '1 day ago',
-                  ),
-                  Divider(),
-                  CommentWidget(
-                    username: 'Chris Evans',
-                    comment: 'Can you make a video on the next topic?',
-                    time: '3 days ago',
-                  ),
-                  // Add more comments as needed
-                ],
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            // Comment input field
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Add a comment...',
-                        border: OutlineInputBorder(),
+                // Username and Video Information
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.grey,
+                        child: ClipOval(
+                          child: Image.asset(
+                            'lib/assets/profile_image.png',
+                            width: 40,
+                            height: 40,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Abhi",
+                            style: TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            "60 k views • 2 days ago",
+                            style: TextStyle(
+                              color: AppColors.hint,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+
+            // Description Section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Description',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
+                  SizedBox(height: 8),
+                  Text(
+                    _showFullDescription
+                        ? _description
+                        : (_description.length > 50
+                            ? '${_description.substring(0, 50)}...'
+                            : _description),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black),
+                  ),
+                  SizedBox(height: 8),
+                  TextButton(
                     onPressed: () {
-                      // Submit comment action
+                      setState(() {
+                        _showFullDescription = !_showFullDescription;
+                      });
                     },
-                    child: Text('Post'),
+                    child: Text(
+                      _showFullDescription ? 'Show Less...' : '...See More',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold, 
+                        fontSize: 16,
+                      ),
+                    ),
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                 ],
               ),
             ),
 
-            SizedBox(height: 30),
+            // Comment Section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Comments',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  // Comment Input Field
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 245, 255, 244),
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: AppColors.primaryColor),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      controller: _commentController,
+                      decoration: InputDecoration(
+                        hintText: 'Add a comment...',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.all(16),
+                      ),
+                      onSubmitted: (value) {
+                        _addComment();
+                      },
+                    ),
+                  ),
+
+                  // Comment List
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _comments.length,
+                    itemBuilder: (context, index) {
+                      final comment = _comments[index];
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: AssetImage(comment.userProfileImage),
+                        ),
+                        title: Text(comment.commentText),
+                        subtitle: Text(
+                          "${comment.postedDate.hour}:${comment.postedDate.minute} on ${comment.postedDate.day}/${comment.postedDate.month}/${comment.postedDate.year}",
+                          style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
 
             // Product List
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Recommended Products',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -166,23 +253,21 @@ class _WatchVideoState extends State<WatchVideo> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: List.generate(3, (index) {
-                  return _buildProductCard(index);
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to another page when the product card is tapped
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductDescription(index: index)),
+                      );
+                    },
+                    child: _buildProductCard(index), // Your product card
+                  );
                 }),
               ),
             ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _controller.value.isPlaying
-                ? _controller.pause()
-                : _controller.play();
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     );
@@ -191,116 +276,101 @@ class _WatchVideoState extends State<WatchVideo> {
   // Function to build each product card
   Widget _buildProductCard(int index) {
     return Container(
-      width: 150, // Width for each product card
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      width: 150,
+      margin: EdgeInsets.symmetric(horizontal: 2),
       child: Column(
         children: [
-          // Product image
-          Image.asset(
-            'assets/product_image.png', // Replace with your image asset
-            height: 100,
-            width: 100,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 10),
-
-          // Conditional rendering of buttons
-          _quantities[index] == 0
-              ? ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _quantities[index] = 1; // Start with quantity 1
-                    });
-                  },
-                  child: Text('Add'),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          if (_quantities[index] > 0) {
-                            _quantities[index]--;
-                          }
-                        });
-                      },
-                      icon: Icon(Icons.remove),
-                    ),
-                    Text(_quantities[index].toString()),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _quantities[index]++;
-                        });
-                      },
-                      icon: Icon(Icons.add),
-                    ),
-                  ],
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              // Rounded Product image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15.0),
+                child: Image.asset(
+                  'lib/assets/product_description.png',
+                  height: 140,
+                  width: 120,
+                  fit: BoxFit.cover,
                 ),
-          SizedBox(height: 10),
-
-          // Product description or details (4 lines)
+              ),
+              // Overlapping Add button
+              Positioned(
+                bottom: 0,
+                child: _quantities[index] == 0
+                    ? ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _quantities[index] = 1; // Start with quantity 1
+                          });
+                        },
+                        child: Text(
+                          'Add',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                        ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () {
+                              setState(() {
+                                if (_quantities[index] > 0) {
+                                  _quantities[index]--;
+                                }
+                              });
+                            },
+                          ),
+                          Text(
+                            '${_quantities[index]}',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                _quantities[index]++;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
           Text(
             'Product Name',
             style: TextStyle(fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
-          Text('Price: \$99'),
-          Text('Category: Electronics'),
-          Text('Rating: 4.5/5'),
-          Text('Stock: Available'),
+          SizedBox(height: 4),
+          Text(
+            '\$10.99',
+            style: TextStyle(color: AppColors.primaryColor),
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );
   }
 }
 
-// Comment Widget for displaying each comment
-class CommentWidget extends StatelessWidget {
-  final String username;
-  final String comment;
-  final String time;
+class Comment {
+  final String userProfileImage;
+  final String commentText;
+  final DateTime postedDate;
 
-  CommentWidget({
-    required this.username,
-    required this.comment,
-    required this.time,
+  Comment({
+    required this.userProfileImage,
+    required this.commentText,
+    required this.postedDate,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 20,
-          backgroundImage: AssetImage('assets/profile_pic.png'), // Profile picture of commenter
-        ),
-        SizedBox(width: 10),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                username,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(comment),
-              SizedBox(height: 5),
-              Text(
-                time,
-                style: TextStyle(fontSize: 12, color: Colors.grey),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: WatchVideo(),
-  ));
 }

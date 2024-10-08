@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:user_application/constants/colors.dart';
 import 'dart:io';
 
 import 'package:user_application/screen/upload_details.dart'; // Import to use File
@@ -62,12 +63,12 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
 
   void _continue() {
     // Navigate to another page (you can define your destination)
-     Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => UploadDetails(), // Navigate to LoginScreen
-                  ),
-                );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UploadDetails(), // Navigate to LoginScreen
+      ),
+    );
   }
 
   @override
@@ -84,6 +85,18 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
             ElevatedButton(
               onPressed: _chooseVideo,
               child: Text('Choose from Gallery'),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(vertical: 16), // Larger button
+                backgroundColor: Colors
+                    .white, // Change this to your desired background color
+                foregroundColor: AppColors
+                    .primaryColor, // Change this to your desired text color
+                side: BorderSide(
+                  color: AppColors
+                      .primaryColor, // Change this to your desired border color
+                  width: 2.0, // Border width
+                ),
+              ),
             ),
             SizedBox(height: 20),
             if (_videoFile != null) ...[
@@ -98,7 +111,21 @@ class _UploadVideoScreenState extends State<UploadVideoScreen> {
             Spacer(),
             ElevatedButton(
               onPressed: _isUploading ? null : _continue,
-              child: Text('Continue'),
+              child: Text('Upload Video'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primaryColor,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 30.0, vertical: 10.0),
+                minimumSize: const Size(330, 50),
+                elevation: 5.0,
+              ).copyWith(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

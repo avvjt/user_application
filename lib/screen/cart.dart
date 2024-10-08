@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:user_application/constants/colors.dart';
+import 'package:user_application/screen/order.dart';
 
 void main() => runApp(Cart());
 
@@ -7,7 +9,26 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Product Item List')),
+        appBar: AppBar(
+          title: Text(
+            'My Cart', // Modified title
+            style: TextStyle(
+              fontSize: 20, // Custom font size
+              fontWeight: FontWeight.bold, // Custom font weight
+              color: Colors.black, // Custom text color
+            ),
+          ),
+          leading: IconButton(
+            icon:
+                Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+            onPressed: () {
+              Navigator.pop(context); // Navigate back to the previous screen
+            },
+          ),
+          backgroundColor:
+              Colors.transparent, // Modify the app bar color if needed
+          foregroundColor: Colors.black,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: ProductItemList(),
@@ -46,19 +67,60 @@ class _ProductItemListState extends State<ProductItemList> {
             productPrice: productPrice, // Pass the product price
           ),
         SizedBox(height: 20), // Space between items and totals
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Total Price:', style: TextStyle(fontWeight: FontWeight.bold)), // Left label
-            Text('\$${totalPrice.toStringAsFixed(2)}', style: TextStyle(fontSize: 16)), // Right total price
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: 16.0), // Left and right margin
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Total Price:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ), // Left label
+              Text(
+                '\$${totalPrice.toStringAsFixed(2)}',
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ), // Right total price
+            ],
+          ),
         ),
-        SizedBox(height: 20), // Space before button
+
+        SizedBox(height: 50), // Space before button
         ElevatedButton(
           onPressed: () {
             // Add your continue logic here
+            // Navigate to another page when tapped
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Order(), // Placeholder for new page
+              ),
+            );
           },
-          child: Text('Continue'),
+          child: Text(
+            'Continue',
+            style: TextStyle(
+              fontSize: 18, // Increase text size
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(
+                horizontal: 50, vertical: 12), // Increase button size
+            backgroundColor:
+                AppColors.primaryColor, // Change button background color
+            foregroundColor: Colors.white, // Change text color
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(25), // Optional: Button corner radius
+            ),
+          ),
         ),
       ],
     );
@@ -99,17 +161,13 @@ class _ProductItemState extends State<ProductItem> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(8),
-      ),
       child: Row(
         children: [
           // Product Image
           Image.asset(
-            'assets/product_image.png', // Replace with your image asset path
-            width: 60,
-            height: 60,
+            'lib/assets/cart_image.png', // Replace with your image asset path
+            width: 100,
+            height: 100,
             fit: BoxFit.cover,
           ),
           SizedBox(width: 10),
@@ -118,11 +176,23 @@ class _ProductItemState extends State<ProductItem> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Product Name', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Carrot',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold)),
               SizedBox(height: 5),
-              Text('Product Description'),
+              Text(
+                'Crisp and hydrating',
+                style: TextStyle(
+                    color: AppColors.yellow,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 15),
+              ),
               SizedBox(height: 5),
-              Text('\$${widget.productPrice.toStringAsFixed(2)}', style: TextStyle(color: Colors.green)), // Use the passed product price
+              Text('\$${widget.productPrice.toStringAsFixed(2)}',
+                  style: TextStyle(
+                      color: Colors.black)), // Use the passed product price
             ],
           ),
           Spacer(),
