@@ -31,6 +31,10 @@ class _HomeScreenState extends State<Fragment> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsiveness
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
         appBar: PreferredSize(
@@ -42,45 +46,56 @@ class _HomeScreenState extends State<Fragment> {
           ),
         ),
         body: _pages[_selectedIndex], // Display the selected screen
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: _buildIcon('lib/assets/home.png', 0),
-              label: '', // Remove label
-            ),
-            BottomNavigationBarItem(
-              icon: _buildIcon('lib/assets/add.png', 1),
-              label: '', // Remove label
-            ),
-            BottomNavigationBarItem(
-              icon: _buildIcon('lib/assets/profile.png', 2),
-              label: '', // Remove label
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.white,
-          onTap: _onItemTapped,
-          showSelectedLabels: false, // Hide selected label
-          showUnselectedLabels: false, // Hide unselected label
+        bottomNavigationBar: SafeArea(
+          child: BottomNavigationBar(
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: _buildIcon('lib/assets/home.png', 0, screenWidth),
+                label: '', // Remove label
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('lib/assets/add.png', 1, screenWidth),
+                label: '', // Remove label
+              ),
+              BottomNavigationBarItem(
+                icon: _buildIcon('lib/assets/profile.png', 2, screenWidth),
+                label: '', // Remove label
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.white,
+            onTap: _onItemTapped,
+            showSelectedLabels: false, // Hide selected label
+            showUnselectedLabels: false, // Hide unselected label
+          ),
         ),
       ),
     );
   }
 
   // Builds the icon with a circular background for the selected tab
-  Widget _buildIcon(String assetPath, int index) {
+  Widget _buildIcon(String assetPath, int index, double screenWidth) {
     bool isSelected = _selectedIndex == index;
+
+    // Calculate icon and padding size based on screen width
+    double iconSize = screenWidth * 0.06; // Adjust icon size
+    double padding = screenWidth * 0.03; // Adjust padding
+
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? AppColors.primaryColor : Colors.transparent, // Circle background when selected
+        color: isSelected
+            ? AppColors.primaryColor
+            : Colors.transparent, // Circle background when selected
       ),
       child: Image.asset(
         assetPath,
-        width: 24,
-        height: 24,
-        color: isSelected ? Colors.white : Colors.black, // White icon when selected
+        width: iconSize,
+        height: iconSize,
+        color: isSelected
+            ? Colors.white
+            : Colors.black, // White icon when selected
       ),
     );
   }

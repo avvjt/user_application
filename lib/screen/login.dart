@@ -11,7 +11,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
-  // Controller for phone number input field
   final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
@@ -20,27 +19,29 @@ class LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  // Function to validate the phone number (simple regex)
   bool _validatePhoneNumber(String phoneNumber) {
-    // Adjust the regex pattern based on the required phone number format
     final RegExp phoneRegExp = RegExp(r'^\d{10}$');
     return phoneRegExp.hasMatch(phoneNumber);
   }
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Removes the back button
-        title: null, // Removes the title
-        elevation: 0, // Optional: removes the shadow under the AppBar
+        automaticallyImplyLeading: false,
+        title: null,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.05), // Responsive padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
+            SizedBox(height: screenHeight * 0.05), // Responsive height
             const Text(
               'Login now',
               style: TextStyle(
@@ -49,83 +50,85 @@ class LoginScreenState extends State<LoginScreen> {
                 color: AppColors.primaryColor,
               ),
             ),
-            const SizedBox(height: 100),
+            SizedBox(height: screenHeight * 0.1), // Responsive height
 
             // Input field for phone number
-            TextField(
-              controller: _phoneNumberController, // Attach the controller here
-              keyboardType: TextInputType.phone,
-              cursorColor: AppColors.primaryColor,
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                labelStyle: TextStyle(
-                  color: AppColors.hint,
-                  fontSize: 14,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
+            Expanded(
+              child: TextField(
+                controller: _phoneNumberController,
+                keyboardType: TextInputType.phone,
+                cursorColor: AppColors.primaryColor,
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  labelStyle: TextStyle(
+                    color: AppColors.hint,
+                    fontSize: 14,
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: AppColors.primaryColor,
-                    width: 2.0,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
+                    ),
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: AppColors.primaryColor,
-                    width: 2.0,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                    borderSide: BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 2.0,
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: screenHeight * 0.02), // Responsive height
 
             // "Send OTP" Button
-            ElevatedButton(
-              onPressed: () {
-                final phoneNumber = _phoneNumberController.text;
-                if (phoneNumber.isNotEmpty &&
-                    _validatePhoneNumber(phoneNumber)) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => OtpVerificationScreen(
-                        phoneNumber: phoneNumber,
+            SizedBox(
+              width: screenWidth * 0.8, // Responsive button width
+              child: ElevatedButton(
+                onPressed: () {
+                  final phoneNumber = _phoneNumberController.text;
+                  if (phoneNumber.isNotEmpty && _validatePhoneNumber(phoneNumber)) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OtpVerificationScreen(
+                          phoneNumber: phoneNumber,
+                        ),
                       ),
-                    ),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please enter a valid phone number'),
-                    ),
-                  );
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: AppColors.primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 18.0, vertical: 10.0),
-                minimumSize: const Size(150, 50),
-              ),
-              child: const Text(
-                'Send OTP',
-                style: TextStyle(fontSize: 16),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a valid phone number'),
+                      ),
+                    );
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.primaryColor,
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  minimumSize: const Size(double.infinity, 50),
+                ),
+                child: const Text(
+                  'Send OTP',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ),
 
-            // Spacer pushes the next section to the bottom
             const Spacer(),
 
-            // Column for Google login text and button at the bottom
+            // Google login section
             Column(
               children: [
                 // "Login with Google" Text
@@ -155,40 +158,41 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30), // Space between text and button
+                SizedBox(height: screenHeight * 0.03), // Responsive height
 
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Show toast message when button is pressed
-                    Fluttertoast.showToast(
-                      msg: "Signin with google function called",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: AppColors.primaryColor,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                    // Implement Google login functionality here (if needed)
-                  },
-                  icon: Image.asset(
-                    'lib/assets/google_icon.png',
-                    width: 24,
-                    height: 24,
-                  ),
-                  label: const Text('Google'),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 18.0, vertical: 10.0),
-                    minimumSize: const Size(350, 50),
-                    elevation: 5.0,
+                SizedBox(
+                  width: screenWidth * 0.8, // Responsive button width
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Fluttertoast.showToast(
+                        msg: "Signin with google function called",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: AppColors.primaryColor,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                      // Implement Google login functionality here (if needed)
+                    },
+                    icon: Image.asset(
+                      'lib/assets/google_icon.png',
+                      width: 24,
+                      height: 24,
+                    ),
+                    label: const Text('Google'),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      minimumSize: const Size(double.infinity, 50),
+                      elevation: 5.0,
+                    ),
                   ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 30), // Space at the bottom of the screen
+            SizedBox(height: screenHeight * 0.03), // Space at the bottom of the screen
           ],
         ),
       ),

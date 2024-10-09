@@ -2,224 +2,131 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:user_application/constants/colors.dart';
 
-
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Get the screen height and width
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: null,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 60.0),
-            // Profile Section
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Profile Image
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: NetworkImage('https://example.com/profile.jpg'),
-                ),
-                SizedBox(width: 20.0),
-                
-                // Name and Title
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20.0),
-                    Text(
-                      'Abhi',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        // Enable scrolling
+        child: Padding(
+          padding: EdgeInsets.all(screenWidth * 0.045), // Reduced padding by 10%
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: screenHeight * 0.0425), // Reduced spacing by 10%
+              // Profile Section
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Profile Image
+                  CircleAvatar(
+                    radius: screenWidth * 0.1125, // Reduced radius by 10%
+                    backgroundImage:
+                        NetworkImage('https://example.com/profile.jpg'),
+                  ),
+                  SizedBox(width: screenWidth * 0.045), // Reduced spacing by 10%
+                  // Name and Title
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: screenHeight * 0.0225), // Reduced spacing by 10%
+                      Text(
+                        'Abhi',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.045, // Reduced font size by 10%
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    Text(
-                      '+ 91-9878675689',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600],
+                      Text(
+                        '+ 91-9878675689',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.0405, // Reduced font size by 10%
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[600],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            
-            SizedBox(height: 16.0), // Spacing between profile and divider
-            
-            // Horizontal Divider
-            Divider(
-              color: Colors.grey, // Color of the divider
-              thickness: 1.0,     // Thickness of the divider
-            ),
-            
-            SizedBox(height: 16.0), // Spacing between divider and text with icons
-            
-            // Column of TextViews with Icons
-// Column of TextViews with Icons
-Column(
-  crossAxisAlignment: CrossAxisAlignment.start,
-  children: [
-    // Row 1: Icon and Text
-    Row(
-      children: [
-        Image.asset(
-          'lib/assets/your_video.png', // Path to your video icon
-          width: 40, // Adjust width as needed
-          height: 40, // Adjust height as needed
-          color: Colors.blue, // Color for the icon
-        ),
-        SizedBox(width: 8.0), // Space between icon and text
-        GestureDetector(
-          onTap: () {
-            Fluttertoast.showToast(
-              msg: "Your Videos clicked!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: Colors.blue,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          },
-          child: Text(
-            'Your Videos',
-            style: TextStyle(fontSize: 17), // Set the desired font size
-          ),
-        ),
-      ],
-    ),
-    SizedBox(height: 16.0), // Spacing between rows
-    
-    // Row 2: Icon and Text
-    Row(
-      children: [
-        Image.asset(
-          'lib/assets/order_history.png', // Path to your order history icon
-          width: 40,
-          height: 40,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 8.0),
-        GestureDetector(
-          onTap: () {
-            Fluttertoast.showToast(
-              msg: "Order History clicked!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: AppColors.primaryColor,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          },
-          child: Text(
-            'Order History',
-            style: TextStyle(fontSize: 17), // Set the desired font size
-          ),
-        ),
-      ],
-    ),
-    SizedBox(height: 16.0),
-    
-    // Row 3: Icon and Text
-    Row(
-      children: [
-        Image.asset(
-          'lib/assets/save_payment.png', // Path to your saved payment icon
-          width: 40,
-          height: 40,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 8.0),
-        GestureDetector(
-          onTap: () {
-            Fluttertoast.showToast(
-              msg: "Saved Payment Method clicked!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: AppColors.primaryColor,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          },
-          child: Text(
-            'Saved Payment Method',
-            style: TextStyle(fontSize: 17), // Set the desired font size
-          ),
-        ),
-      ],
-    ),
-    SizedBox(height: 16.0),
-    
-    // Row 4: Icon and Text
-    Row(
-      children: [
-        Image.asset(
-          'lib/assets/logout.png', // Path to your logout icon
-          width: 40,
-          height: 40,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 8.0),
-        GestureDetector(
-          onTap: () {
-            Fluttertoast.showToast(
-              msg: "Logout clicked!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: AppColors.primaryColor,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          },
-          child: Text(
-            'Logout',
-            style: TextStyle(fontSize: 17), // Set the desired font size
-          ),
-        ),
-      ],
-    ),
-    SizedBox(height: 16.0),
-    
-    // Row 5: Icon and Text
-    Row(
-      children: [
-        Image.asset(
-          'lib/assets/feedback.png', // Path to your feedback icon
-          width: 40,
-          height: 40,
-          color: AppColors.primaryColor,
-        ),
-        SizedBox(width: 8.0),
-        GestureDetector(
-          onTap: () {
-            Fluttertoast.showToast(
-              msg: "Help & Feedback clicked!",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              backgroundColor: AppColors.primaryColor,
-              textColor: Colors.white,
-              fontSize: 16.0,
-            );
-          },
-          child: Text(
-            'Help & Feedback',
-            style: TextStyle(fontSize: 18), // Set the desired font size
-          ),
-        ),
-      ],
-    ),
-  ],
-),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: screenHeight * 0.0225), // Reduced spacing by 10%
+              Divider(color: Colors.grey, thickness: 1.0), // Horizontal Divider
+              SizedBox(height: screenHeight * 0.0225), // Reduced spacing by 10%
 
-
-          ],
+              // Column of TextViews with Icons
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildProfileOption('Your Videos', 'lib/assets/your_video.png',
+                      () {
+                    Fluttertoast.showToast(
+                        msg: "Your Videos clicked!",
+                        backgroundColor: AppColors.primaryColor);
+                  }, screenWidth),
+                  buildProfileOption(
+                      'Order History', 'lib/assets/order_history.png', () {
+                    Fluttertoast.showToast(
+                        msg: "Order History clicked!",
+                        backgroundColor: AppColors.primaryColor);
+                  }, screenWidth),
+                  buildProfileOption(
+                      'Saved Payment Method', 'lib/assets/save_payment.png',
+                      () {
+                    Fluttertoast.showToast(
+                        msg: "Saved Payment Method clicked!",
+                        backgroundColor: AppColors.primaryColor);
+                  }, screenWidth),
+                  buildProfileOption('Logout', 'lib/assets/logout.png', () {
+                    Fluttertoast.showToast(
+                        msg: "Logout clicked!",
+                        backgroundColor: AppColors.primaryColor);
+                  }, screenWidth),
+                  buildProfileOption(
+                      'Help & Feedback', 'lib/assets/feedback.png', () {
+                    Fluttertoast.showToast(
+                        msg: "Help & Feedback clicked!",
+                        backgroundColor: AppColors.primaryColor);
+                  }, screenWidth),
+                ],
+              ),
+              SizedBox(height: screenHeight * 0.09), // Reduced bottom spacing by 10%
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  // Helper method to create profile options
+  Widget buildProfileOption(
+      String title, String iconPath, Function() onTap, double screenWidth) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Image.asset(
+              iconPath,
+              width: screenWidth * 0.09, // Reduced icon size by 10%
+              height: screenWidth * 0.09,
+              color: AppColors.primaryColor,
+            ),
+            SizedBox(width: screenWidth * 0.018), // Reduced spacing by 10%
+            GestureDetector(
+              onTap: onTap,
+              child: Text(
+                title,
+                style: TextStyle(
+                    fontSize: screenWidth * 0.0405), // Reduced font size by 10%
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 14.4), // Reduced spacing between rows by 10%
+      ],
     );
   }
 }

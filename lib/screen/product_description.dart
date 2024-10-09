@@ -17,6 +17,10 @@ class _ProductDescriptionState extends State<ProductDescription> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen width and height
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: null,
       body: SingleChildScrollView(
@@ -25,109 +29,119 @@ class _ProductDescriptionState extends State<ProductDescription> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.02),
               // Single Image that is attached to the top, left, and right
               Container(
-                height: 350, // Adjust height as necessary
+                height: screenHeight * 0.4, // Make height responsive
+                width: screenWidth,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'lib/assets/product_description.png'), // Replace with your image path
-                    fit: BoxFit.cover, // Adjust the fit
+                    image: AssetImage('lib/assets/product_description.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
               // Container for the yellow background text
               Container(
-                height: 40, // Set the height for the container
-                width:
-                    double.infinity, // Make the container span the full width
-                color: Colors.yellow, // Background color
-                alignment: Alignment.centerLeft, // Align text to the left
+                height: screenHeight * 0.05,
+                width: screenWidth,
+                color: Colors.yellow,
+                alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0), // Add horizontal padding for spacing
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04, // Responsive padding
+                  ),
                   child: Text(
                     'Fresh Fruits',
                     style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.black),
-                    textAlign:
-                        TextAlign.start, // Align text to the start (left)
+                      fontSize: screenWidth * 0.04,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.start,
                   ),
                 ),
               ),
-              SizedBox(height: 12),
+              SizedBox(height: screenHeight * 0.015),
 
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0), // Adjust horizontal padding as needed
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Text(
                   'Fuji Apple',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: screenHeight * 0.01),
 
               Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.spaceEvenly, // Distribute buttons evenly
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('2 pieces (300 - 350 g)'),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.transparent, // Text color
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5), // Button size
-                      textStyle: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold), // Text size and style
-                      elevation: 0, // No shadow
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('2 pieces (300 - 350 g)'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        textStyle: TextStyle(
+                          fontSize: screenWidth * 0.03,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        elevation: 0,
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('3 pieces (350 - 400 g)'),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      textStyle:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                      elevation: 0,
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('3 pieces (350 - 400 g)'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        textStyle: TextStyle(
+                          fontSize: screenWidth * 0.03,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        elevation: 0,
+                      ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text('4 pieces (500 g)'),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.transparent,
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      textStyle:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-                      elevation: 0,
+                  Flexible(
+                    child: ElevatedButton(
+                      onPressed: () {},
+                      child: Text('4 pieces (500 g)'),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.black,
+                        backgroundColor: Colors.transparent,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        textStyle: TextStyle(
+                          fontSize: screenWidth * 0.03,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        elevation: 0,
+                      ),
                     ),
                   ),
                 ],
               ),
 
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0), // Same horizontal padding for price
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Text(
                   '\$99.99', // Replace with actual price
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: screenWidth * 0.05,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: screenHeight * 0.03),
 
               // Center the "Add to Cart" button
               Center(
@@ -135,38 +149,39 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   onPressed: () {
                     // Add to Cart action
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  Cart()), // Replace with your actual page
-                        );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Cart(),
+                      ),
+                    );
                   },
                   child: Text(
                     'Add to Cart',
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(fontSize: screenWidth * 0.045),
                   ),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                    backgroundColor:
-                        AppColors.primaryColor, // Button background color
-                    foregroundColor: Colors.white, // Text color
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.08,
+                      vertical: screenHeight * 0.015,
+                    ),
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8), // Adjust this value to reduce the curve
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
               ),
 
-              SizedBox(height: 30),
+              SizedBox(height: screenHeight * 0.03),
 
-              // First text: "Description" with padding
+              // "Description" section
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Text(
                   'Description',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: screenWidth * 0.045,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -179,10 +194,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       'It can be very long, and the user can choose to see more if the text is too long to display. '
                       'This description explains everything about the product in detail.';
 
-                  // Check if text exceeds 2 lines (around 80 characters here)
                   final textWidget = Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0), // Add padding here too
+                    padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth * 0.04),
                     child: Text(
                       descriptionText,
                       maxLines: isExpanded ? null : 2,
@@ -190,8 +204,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
                           ? TextOverflow.visible
                           : TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: 16, // Modify text size
-                        color: Colors.black, // Modify text color
+                        fontSize: screenWidth * 0.04,
+                        color: Colors.black,
                       ),
                     ),
                   );
@@ -212,9 +226,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             child: Text(
                               'See More',
                               style: TextStyle(
-                                fontSize: 18, // Modify "See More" text size
-                                color: Colors
-                                    .black, // Modify "See More" text color
+                                fontSize: screenWidth * 0.045,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -225,72 +238,76 @@ class _ProductDescriptionState extends State<ProductDescription> {
                 },
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.02),
 
               // "Features Product" section
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Text(
                   'Features Product',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: screenWidth * 0.045,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.02),
 
               Container(
-                height: 200, // Adjusted height to accommodate image and button
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16), // Padding for the list
+                height: screenHeight * 0.25, // Adjusted height for responsiveness
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: ListView.builder(
-                  scrollDirection:
-                      Axis.horizontal, // Enables horizontal scrolling
-                  itemCount: 5, // Number of product items
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.only(
-                          right: 20), // Space between products
+                      padding: EdgeInsets.only(right: screenWidth * 0.05),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(
-                                12), // Small curve on the image
+                            borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              'lib/assets/product_description.png', // Replace with your product image path
-                              width: 100,
-                              height: 100,
+                              'lib/assets/product_description.png',
+                              width: screenWidth * 0.3,
+                              height: screenHeight * 0.15,
                               fit: BoxFit.cover,
                             ),
                           ),
-                          // Space between image and button
                           ElevatedButton(
-                            onPressed: () {
-                              // Add to Cart action
-                            },
-                            child: Text('Add'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors
-                                  .white, // White background for the button
-                              foregroundColor: Colors.black, // Text color
-                              side: BorderSide(
-                                  color: Colors.yellow,
-                                  width: 2), // Yellow border
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    8), // Rounded corners for the button
-                              ),
-                            ),
-                          ),
+  onPressed: () {
+    // Add to Cart action
+  },
+  child: Text(
+    'Add',
+    style: TextStyle(
+      fontSize: screenWidth * 0.04, // Responsive text size
+    ),
+  ),
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.black,
+    padding: EdgeInsets.symmetric(
+      vertical: screenHeight * 0.015, // Responsive vertical padding
+      horizontal: screenWidth * 0.05, // Responsive horizontal padding
+    ),
+    side: BorderSide(
+      color: Colors.yellow,
+      width: screenWidth * 0.005, // Responsive border width
+    ),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(screenWidth * 0.02), // Responsive border radius
+    ),
+  ),
+),
+
                         ],
                       ),
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),

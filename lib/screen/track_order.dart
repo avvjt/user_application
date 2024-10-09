@@ -10,33 +10,30 @@ class TrackOrder extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Track Order', // Modified title
+            'Track Order',
             style: TextStyle(
-              fontSize: 20, // Custom font size
-              fontWeight: FontWeight.bold, // Custom font weight
-              color: Colors.black, // Custom text color
+              fontSize:
+                  MediaQuery.of(context).size.width * 0.045, // Reduced by 10%
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
           leading: IconButton(
-            icon:
-                Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+            icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              Navigator.pop(context); // Navigate back to the previous screen
+              Navigator.pop(context);
             },
           ),
-          backgroundColor:
-              Colors.transparent, // Modify the app bar color if needed
+          backgroundColor: Colors.transparent,
           foregroundColor: Colors.black,
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SingleChildScrollView(
-              // Allows scrolling if content overflows
-              child: Column(
-                children: List.generate(
-                    4, (index) => orderItem()), // Generate 4 items
-              ),
+        body: Padding(
+          padding: EdgeInsets.all(
+              MediaQuery.of(context).size.width * 0.04), // Responsive padding
+          child: SingleChildScrollView(
+            child: Column(
+              children: List.generate(4,
+                  (index) => orderItem(context)), // Generate 4 responsive items
             ),
           ),
         ),
@@ -44,10 +41,13 @@ class TrackOrder extends StatelessWidget {
     );
   }
 
-  Widget orderItem() {
+  Widget orderItem(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 20.0), // Space between items
-      padding: const EdgeInsets.all(16.0),
+      margin: EdgeInsets.only(bottom: screenHeight * 0.02), // Responsive margin
+      padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.primaryColor, width: 2),
         borderRadius: BorderRadius.circular(12), // Rounded corners
@@ -58,70 +58,113 @@ class TrackOrder extends StatelessWidget {
         children: [
           // Row containing texts on the left and button on the right
           Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.center, // Align center vertically
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Column of texts on the left
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Delivery',
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Delivery',
                       style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  SizedBox(height: 5),
-                  Text('Order # 10',
+                        fontSize: screenWidth * 0.0405, // Reduced by 10%
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: screenHeight * 0.01), // Responsive spacing
+                    Text(
+                      'Order # 10',
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.grey)),
-                  Text('Excepted Delivery : 20 Sep 2024',
+                        fontSize: screenWidth * 0.036, // Reduced by 10%
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    Text(
+                      'Expected Delivery: 20 Sep 2024',
                       style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.grey)),
-                ],
+                        fontSize: screenWidth * 0.036, // Reduced by 10%
+                        fontWeight: FontWeight.normal,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
-              // Button on the right side, vertically centered
-              ElevatedButton(
-                onPressed: () {
-                  // Button press logic here
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      AppColors.primaryColor, // Button background color
-                  foregroundColor: Colors.white, // Text color
+              // Responsive Button on the right side with padding and margin
+              Padding(
+                padding: EdgeInsets.only(
+                    left: screenWidth * 0.02), // Space between button and texts
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Button press logic here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primaryColor,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      vertical:
+                          screenHeight * 0.015, // Responsive button padding
+                      horizontal: screenWidth * 0.04,
+                    ),
+                    minimumSize: Size(screenWidth * 0.3,
+                        screenHeight * 0.05), // Responsive button size
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Rounded button
+                    ),
+                  ),
+                  child: Text(
+                    'Track Package',
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.036), // Reduced by 10%
+                  ),
                 ),
-                child: Text('Track Package'),
               ),
             ],
           ),
 
-
-          // Border line
+          // Divider line
           Divider(thickness: 1, color: Colors.lightGreen),
 
-          // Text below the border line
-          Text('Fuji Apple 2 pieces (300-350 grams)',
-              style: TextStyle(
-                  fontSize: 15,
+          // Row for icon and text below the border line
+          Row(
+            children: [
+              Image.asset(
+                'lib/assets/track_order.png', // Update with your icon path
+                width: MediaQuery.of(context).size.width *
+                    0.06, // Responsive width
+                height: MediaQuery.of(context).size.width *
+                    0.06, // Responsive height
+              ),
+              SizedBox(width: 8), // Space between icon and text
+              Text(
+                'Fuji Apple 2 pieces (300-350 grams)',
+                style: TextStyle(
+                  fontSize: screenWidth * 0.0378, // Responsive font size
                   fontWeight: FontWeight.normal,
-                  color: Colors.black)),
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
 
-          // Border line
+          // Another divider line
           Divider(thickness: 1, color: Colors.lightGreen),
-          // Additional border and text at the bottom
-          Container(
+
+          // Align price text to the left
+          Align(
+            alignment: Alignment.centerLeft, // Aligns the text to the left
             child: Text(
               '\$ 2',
               style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-              textAlign: TextAlign.center,
+                fontSize: screenWidth * 0.0405, // Reduced by 10%
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
           ),
         ],

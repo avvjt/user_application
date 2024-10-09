@@ -10,58 +10,54 @@ void main() {
 class Order extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Payment', // Modified title
+            'Payment',
             style: TextStyle(
-              fontSize: 20, // Modify title size
-              fontWeight: FontWeight.bold, // Modify title weight
-              color: Colors.black, // Modify title color
+              fontSize: screenWidth * 0.05, // Responsive title size
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
             ),
           ),
           leading: IconButton(
-            icon:
-                Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+            icon: Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () {
-              Navigator.pop(
-                  context); // Action to go back to the previous screen
+              Navigator.pop(context);
             },
           ),
-          backgroundColor: Colors.white, // Customize the AppBar color
+          backgroundColor: Colors.white,
           foregroundColor: Colors.black,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(screenWidth * 0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: double.infinity, // Set width to match parent
-                height: 130, // Set your desired height
+                width: double.infinity,
+                height: screenHeight * 0.2, // Responsive card height
                 child: Card(
-                  elevation: 4, // Adds shadow to give elevation effect
+                  elevation: 4,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12), // Rounded corners
+                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(
-                        12.0), // Reduced padding inside the card
+                    padding: EdgeInsets.all(screenWidth * 0.03),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize:
-                          MainAxisSize.min, // Minimize height of the column
                       children: [
-                        // Your Row wrapped in GestureDetector for navigation
                         GestureDetector(
                           onTap: () {
-                            // Navigate to another page
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      DeliveryLocation()), // Replace with your destination page
+                                      DeliveryLocation()), // Navigate to delivery location
                             );
                           },
                           child: Row(
@@ -70,53 +66,45 @@ class Order extends StatelessWidget {
                               Text(
                                 'Add Location',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: screenWidth * 0.04,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
                               ),
                               Container(
-                                width:
-                                    40, // Container size (should be larger than the icon)
-                                height: 40, // Height of the container
+                                width: screenWidth * 0.1,
+                                height: screenWidth * 0.1,
                                 decoration: BoxDecoration(
-                                  color: Colors.yellow, // Yellow background
-                                  shape: BoxShape.circle, // Circular shape
+                                  color: Colors.yellow,
+                                  shape: BoxShape.circle,
                                 ),
                                 child: Center(
                                   child: Image.asset(
-                                    'lib/assets/location.png', // Path to your asset icon
-                                    width: 20, // Icon width
-                                    height: 20, // Icon height
+                                    'lib/assets/location.png',
+                                    width: screenWidth * 0.05,
+                                    height: screenWidth * 0.05,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 8), // Reduced spacing between elements
-                        Divider(
-                          color: Colors.black,
-                          thickness: 1,
-                        ),
-                        SizedBox(
-                            height: 8), // Reduced spacing after the divider
-
-                        // Icon and text row after the divider
+                        SizedBox(height: screenHeight * 0.01),
+                        Divider(color: Colors.black),
+                        SizedBox(height: screenHeight * 0.01),
                         Row(
                           children: [
                             Image.asset(
-                              'lib/assets/location_history.png', // Path to your asset icon
-                              width: 20, // Set width
-                              height: 20, // Set height
+                              'lib/assets/location_history.png',
+                              width: screenWidth * 0.05,
+                              height: screenWidth * 0.05,
                             ),
-                            SizedBox(
-                                width:
-                                    6), // Reduced space between icon and text
+                            SizedBox(width: screenWidth * 0.02),
                             Text(
-                              'Kalyani, west bengal',
+                              'Kalyani, West Bengal',
                               style: TextStyle(
-                                  fontSize: 14), // Slightly smaller text
+                                fontSize: screenWidth * 0.035,
+                              ),
                             ),
                           ],
                         ),
@@ -125,148 +113,143 @@ class Order extends StatelessWidget {
                   ),
                 ),
               ),
-
-              SizedBox(
-                  height:
-                      25), // Spacing between the card and the "Order Summary" text
-
+              SizedBox(height: screenHeight * 0.033),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0), // Left and right margin
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: Text(
                   'Order Summary',
                   style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold, // Bold and larger text
+                    fontSize: screenWidth * 0.045,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-
-              SizedBox(height: 5), // Spacing before the summary box
-
-              // Single box for order item
+              SizedBox(height: screenHeight * 0.01),
               Container(
-                margin: EdgeInsets.only(top: 8), // Space above the box
-                padding: EdgeInsets.all(12),
+                margin: EdgeInsets.only(top: screenHeight * 0.01),
+                padding: EdgeInsets.all(screenWidth * 0.03),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(12), // Rounded corners
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.3),
                       spreadRadius: 1,
                       blurRadius: 5,
-                      offset: Offset(0, 2), // changes position of shadow
+                      offset: Offset(0, 2),
                     ),
                   ],
                 ),
                 child: Column(
                   children: [
-                    // First instance of left and right aligned text
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Sub Total Price',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                         Text(
                           '\$ 9.2',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8), // Spacing between rows
-                    // Second instance of left and right aligned text
+                    SizedBox(height: screenHeight * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Coupon',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                         Text(
                           'None',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8), // Spacing between rows
-                    // Third instance of left and right aligned text
+                    SizedBox(height: screenHeight * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Delivery Charges',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                         Text(
                           '\$ 10',
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                       ],
                     ),
-                    SizedBox(height: 8), // Spacing before the divider
-                    Divider(
-                      // Horizontal border
-                      color: Colors.black,
-                      thickness: 1,
-                    ),
-                    SizedBox(height: 8), // Spacing after the divider
-
-                    // Additional instance of left and right aligned text
+                    SizedBox(height: screenHeight * 0.01),
+                    Divider(color: Colors.black),
+                    SizedBox(height: screenHeight * 0.01),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'Total',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                         Text(
                           '\$19.2',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              Spacer(), // Pushes the button to the bottom
-              // Pay Now Button
+              Spacer(),
               Container(
-                width: double.infinity, // Makes the button full width
+                width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Navigate to the Payment Screen
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => OrderSucessful()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              OrderSuccessful()), // Navigate to order successful page
                     );
                   },
-                  child: Text('Pay Now'),
+                  child: Text(
+                    'Pay Now',
+                    style: TextStyle(
+                      fontSize: screenWidth *
+                          0.03645, // Reduced text size by another 10%
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth *
+                          0.081, // Reduced horizontal padding by another 10%
+                      vertical: screenHeight *
+                          0.0162, // Reduced vertical padding by another 10%
+                    ),
                     backgroundColor: AppColors.primaryColor,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 10.0),
-                    minimumSize: const Size(330, 50),
-                    elevation: 5.0,
-                  ).copyWith(
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                    foregroundColor: Colors.white,
+                    minimumSize: Size(
+                        screenWidth * 0.648,
+                        screenHeight *
+                            0.0486), // Reduced button size by another 10%
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(screenWidth *
+                          0.0243), // Reduced border radius by another 10%
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.02),
             ],
           ),
         ),

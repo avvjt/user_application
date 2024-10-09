@@ -7,6 +7,9 @@ import 'search.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Get the screen width for responsive design
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: null,
       body: Column(
@@ -20,23 +23,25 @@ class HomeScreen extends StatelessWidget {
                 // Logo from assets
                 Image.asset(
                   'lib/assets/home_logo.png', // Replace with your logo path
-                  width: 50,
-                  height: 50,
+                  width: screenWidth * 0.15, // 15% of screen width
+                  height: screenWidth * 0.15, // Maintain aspect ratio
                 ),
                 SizedBox(width: 10), // Space between logo and text/icons
 
                 // Text widget with Spacer
-                Text(
-                  'As an Italian Cook',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                Expanded(
+                  // Added Expanded to allow more space for text
+                  child: Text(
+                    'As an Italian Cook',
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.05, // Responsive text size
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    maxLines: 1, // Limit text to one line
+                    overflow: TextOverflow.ellipsis, // Handle overflow
                   ),
                 ),
-
-                // Spacer to push icons to the right
-                Spacer(),
 
                 // Icons from assets aligned to the right side of the screen
                 Row(
@@ -48,14 +53,14 @@ class HomeScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                SearchScreen(), // Navigate to LoginScreen
+                                SearchScreen(), // Navigate to SearchScreen
                           ),
                         );
                       },
                       child: Image.asset(
                         'lib/assets/search.png', // First icon path
-                        width: 35,
-                        height: 35,
+                        width: screenWidth * 0.1, // Responsive width
+                        height: screenWidth * 0.1, // Responsive height
                       ),
                     ),
                     SizedBox(width: 10),
@@ -71,8 +76,8 @@ class HomeScreen extends StatelessWidget {
                       },
                       child: Image.asset(
                         'lib/assets/cart.png', // Second icon path
-                        width: 35,
-                        height: 35,
+                        width: screenWidth * 0.1, // Responsive width
+                        height: screenWidth * 0.1, // Responsive height
                       ),
                     ),
                     SizedBox(width: 5),
@@ -87,7 +92,8 @@ class HomeScreen extends StatelessWidget {
             child: ListView.builder(
               itemCount: 10, // Number of videos
               itemBuilder: (context, index) {
-                return VideoTile();
+                return VideoTile(
+                    screenWidth: screenWidth); // Pass screenWidth to VideoTile
               },
             ),
           ),
@@ -98,6 +104,10 @@ class HomeScreen extends StatelessWidget {
 }
 
 class VideoTile extends StatelessWidget {
+  final double screenWidth;
+
+  const VideoTile({Key? key, required this.screenWidth}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -105,7 +115,9 @@ class VideoTile extends StatelessWidget {
         // Navigate to the destination page
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => WatchVideo()), // Replace with your destination page
+          MaterialPageRoute(
+              builder: (context) =>
+                  WatchVideo()), // Replace with your destination page
         );
       },
       child: Padding(
@@ -115,10 +127,11 @@ class VideoTile extends StatelessWidget {
           children: [
             // Video Thumbnail from assets with rounded top corners
             Container(
-              height: 200,
+              height: screenWidth * 0.5, // Set height relative to screen width
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('lib/assets/dish_image.png'), // Change this to your image path
+                  image: AssetImage(
+                      'lib/assets/dish_image.png'), // Change this to your image path
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
@@ -142,7 +155,7 @@ class VideoTile extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: screenWidth * 0.045, // Responsive text size
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -159,13 +172,16 @@ class VideoTile extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16.0),
                       child: CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.grey, // Placeholder for profile image
+                        backgroundColor:
+                            Colors.grey, // Placeholder for profile image
                         child: ClipOval(
                           child: Image.asset(
                             'lib/assets/profile_image.png', // Update this path to your icon
-                            width: 40, // Ensure the width and height fit within the CircleAvatar
+                            width:
+                                40, // Ensure the width and height fit within the CircleAvatar
                             height: 40,
-                            fit: BoxFit.cover, // Ensures the image covers the CircleAvatar
+                            fit: BoxFit
+                                .cover, // Ensures the image covers the CircleAvatar
                           ),
                         ),
                       ),
@@ -182,7 +198,8 @@ class VideoTile extends StatelessWidget {
                             "Abhi",
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              fontSize: 16,
+                              fontSize:
+                                  screenWidth * 0.04, // Responsive text size
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -191,7 +208,8 @@ class VideoTile extends StatelessWidget {
                             "60 k views • 2 days ago",
                             style: TextStyle(
                               color: AppColors.hint,
-                              fontSize: 13,
+                              fontSize:
+                                  screenWidth * 0.035, // Responsive text size
                             ),
                           ),
                         ],

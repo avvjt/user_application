@@ -49,4 +49,5 @@ flutter:
     - lib/assets/save_payment.png
     - lib/assets/your_video.png
     - lib/assets/location_history.png
+    - lib/assets/track_order.png
     

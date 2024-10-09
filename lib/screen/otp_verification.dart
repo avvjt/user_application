@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:user_application/constants/colors.dart';
 import 'choose_plan.dart';
@@ -76,6 +75,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen dimensions
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Removes the back button
@@ -83,11 +86,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         elevation: 0, // Optional: removes the shadow under the AppBar
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.05), // Responsive padding
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 40),
+            SizedBox(height: screenHeight * 0.05), // Responsive height
             const Text(
               'OTP Verification',
               style: TextStyle(
@@ -96,7 +99,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 color: AppColors.primaryColor,
               ),
             ),
-            const SizedBox(height: 2),
+            const SizedBox(height: 8), // Responsive height
             RichText(
               text: TextSpan(
                 text: 'Enter the OTP sent to - ',
@@ -109,16 +112,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   TextSpan(
                     text: widget.phoneNumber,
                     style: TextStyle(
-                      color: AppColors
-                          .yellow, // Change this to the desired color for the phone number
-                      fontWeight:
-                          FontWeight.normal, // You can adjust the style here
+                      color: AppColors.yellow,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 50), // Responsive height
 
             // Row for OTP boxes
             Row(
@@ -127,23 +128,26 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               children: List.generate(4, (index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 10.0), // Adjust this value for spacing
+                      horizontal: 8.0), // Adjust this value for spacing
                   child: _buildOtpBox(index),
                 );
               }),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 20), // Responsive height
 
             // Resend OTP Section
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  "Didn't receive the OTP?",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
+                Flexible(
+                  child: Text(
+                    "Didn't receive the OTP?",
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width *
+                          0.04, // 4% of screen width
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 TextButton(
@@ -155,8 +159,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       : null, // Disable button when countdown is active
                   child: Text(
                     _canResend ? 'Resend' : 'Resend ($_remainingTime)',
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width *
+                          0.04, // 4% of screen width
                       fontWeight: FontWeight.bold,
                       color: Colors.red,
                     ),
@@ -165,44 +170,49 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ],
             ),
 
-            const SizedBox(height: 60),
+            const SizedBox(height: 40), // Responsive height
             // Login Button
-            ElevatedButton(
-              onPressed: () {
-                // Gather the entered OTP
-                String otp =
-                    otpControllers.map((controller) => controller.text).join();
+            SizedBox(
+              width: screenWidth * 0.8, // Responsive button width
+              child: ElevatedButton(
+                onPressed: () {
+                  // Gather the entered OTP
+                  String otp = otpControllers
+                      .map((controller) => controller.text)
+                      .join();
 
-                // Check if OTP is complete
-                if (otp.length == 4) {
-                  print("Entered OTP: $otp");
+                  // Check if OTP is complete
+                  if (otp.length == 4) {
+                    print("Entered OTP: $otp");
 
-                  // Here, you can add your logic to verify the OTP with the backend.
-                  // If verification is successful, navigate to the next screen.
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ChoosePlan(), // Navigate to ChoosePlan screen
-                    ),
-                  );
-                } else {
-                  // Show an error message if OTP is not complete
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Please enter a complete OTP.'),
-                    ),
-                  );
-                }
-              },
-              child: const Text('Login'),
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: AppColors.primaryColor,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 18.0, vertical: 10.0),
-                minimumSize: const Size(350, 50),
-                elevation: 5.0,
+                    // Here, you can add your logic to verify the OTP with the backend.
+                    // If verification is successful, navigate to the next screen.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ChoosePlan(), // Navigate to ChoosePlan screen
+                      ),
+                    );
+                  } else {
+                    // Show an error message if OTP is not complete
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please enter a complete OTP.'),
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Login'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.primaryColor,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0, vertical: 10.0),
+                  minimumSize: const Size(
+                      double.infinity, 50), // Responsive button height
+                  elevation: 5.0,
+                ),
               ),
             ),
           ],
@@ -214,20 +224,25 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   // Function to build each OTP box
   Widget _buildOtpBox(int index) {
     return Container(
-      width: 50,
-      height: 50,
+      width: MediaQuery.of(context).size.width * 0.15, // Adjust width as needed
+      height: MediaQuery.of(context).size.height *
+          0.064, // Reduce height by 20% (0.08 * 0.8 = 0.064)
       decoration: BoxDecoration(
         color: AppColors.lightYellow, // Background color for the box
       ),
+      alignment: Alignment.bottomCenter, // Align to the bottom
       child: TextField(
         controller: otpControllers[index],
         focusNode: focusNodes[index],
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         maxLength: 1,
+        style: TextStyle(fontSize: 19), // Increase text size by 20%
         decoration: InputDecoration(
           counterText: '', // Hide the counter below the text field
           border: InputBorder.none, // Remove default border
+          contentPadding: EdgeInsets.only(
+              bottom: 5), // Small bottom padding to help alignment
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
               color: AppColors.primaryColor, // Bottom border color

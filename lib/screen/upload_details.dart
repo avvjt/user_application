@@ -9,155 +9,128 @@ class UploadDetails extends StatefulWidget {
 }
 
 class _UploadDetailsState extends State<UploadDetails> {
-  // Controllers to retrieve the input values
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _ingredientsController = TextEditingController();
 
   @override
   void dispose() {
-    // Clean up controllers when the widget is disposed
     _titleController.dispose();
     _descriptionController.dispose();
     _ingredientsController.dispose();
     super.dispose();
   }
 
-  // Function to handle adding a product
   void _addProduct() {
     String title = _titleController.text;
     String description = _descriptionController.text;
     String ingredients = _ingredientsController.text;
-
-    // You can handle your logic here, like submitting the data to a backend
     print('Title: $title');
     print('Description: $description');
     print('Ingredients: $ingredients');
   }
 
-  // Function to handle video upload
   void _uploadVideo() {
-    // Here you can open the file picker for video selection
     print('Video upload button pressed');
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Details', // Modified title
+          'Add Details',
           style: TextStyle(
-            fontSize: 20, // Custom font size
-            fontWeight: FontWeight.bold, // Custom font weight
-            color: Colors.black, // Custom text color
+            fontSize: screenWidth * 0.05,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+          icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context); // Navigate back to the previous screen
+            Navigator.pop(context);
           },
         ),
-        backgroundColor:
-            Colors.transparent, // Modify the app bar color if needed
-        foregroundColor: Colors.black,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0), // Adding padding around the form
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(screenWidth * 0.05),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.stretch, // Stretch to take full width
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-// Title TextView and Curved TextField
             Text(
               'Title',
               style: TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold), // Customize the style as needed
+                fontSize: screenWidth * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: screenHeight * 0.01),
             TextField(
               controller: _titleController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // More curved edges
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border color
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Curved edges when focused
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border when focused
-                    width: 1.0, // Make the border thicker when focused
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green, width: 1.5),
                 ),
               ),
             ),
-            SizedBox(height: 18), // Add space between fields
-
-// Description TextView and Curved TextField
+            SizedBox(height: screenHeight * 0.02),
             Text(
               'Description',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: screenWidth * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: screenHeight * 0.01),
             TextField(
               controller: _descriptionController,
               maxLines: 4,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // More curved edges
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border color
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Curved edges when focused
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border when focused
-                    width: 1.0, // Thicker border when focused
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green, width: 1.5),
                 ),
               ),
             ),
-            SizedBox(height: 18),
-
-// Ingredients TextView and Curved TextField
+            SizedBox(height: screenHeight * 0.02),
             Text(
               'Ingredients',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: screenWidth * 0.045,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            SizedBox(height: 8),
+            SizedBox(height: screenHeight * 0.01),
             TextField(
               controller: _ingredientsController,
               maxLines: 2,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // More curved edges
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border color
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Curved edges when focused
-                  borderSide: BorderSide(
-                    color: Colors.green, // Green border when focused
-                    width: 1.0, // Thicker border when focused
-                  ),
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                  borderSide: BorderSide(color: Colors.green, width: 1.5),
                 ),
               ),
             ),
-
-            Spacer(),
-
+            SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -165,52 +138,47 @@ class _UploadDetailsState extends State<UploadDetails> {
                   MaterialPageRoute(builder: (context) => ProductList()),
                 );
               },
-              child: Text('Add Product'),
+              child: Text(
+                'Add Product',
+                style: TextStyle(fontSize: screenWidth * 0.04),
+              ),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 16), // Larger button
-                backgroundColor: Colors
-                    .white, // Change this to your desired background color
-                foregroundColor: AppColors
-                    .primaryColor, // Change this to your desired text color
-                side: BorderSide(
-                  color: AppColors
-                      .primaryColor, // Change this to your desired border color
-                  width: 2.0, // Border width
+                padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.02,
+                ),
+                backgroundColor: Colors.white,
+                foregroundColor: AppColors.primaryColor,
+                side: BorderSide(color: AppColors.primaryColor, width: 2.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.03),
                 ),
               ),
             ),
-
-            SizedBox(height: 20), // Space between buttons
-
-            // Upload Video Button
-            Container(
-              width: double.infinity, // Makes the button full width
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to the Payment Screen
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OrderSucessful()),
-                  );
-                },
-                child: Text('Upload Video'),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.primaryColor,
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 30.0, vertical: 10.0),
-                  minimumSize: const Size(330, 50),
-                  elevation: 5.0,
-                ).copyWith(
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                  ),
+            SizedBox(height: screenHeight * 0.02),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OrderSuccessful()),
+                );
+              },
+              child: Text(
+                'Upload Video',
+                style: TextStyle(fontSize: screenWidth * 0.04),
+              ),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.02,
+                  horizontal: screenWidth * 0.1,
+                ),
+                backgroundColor: AppColors.primaryColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(screenWidth * 0.06),
                 ),
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: screenHeight * 0.04),
           ],
         ),
       ),

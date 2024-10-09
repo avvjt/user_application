@@ -13,7 +13,6 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-
   List<String> recentSearches = [];
 
   void _handleSearch() {
@@ -29,31 +28,40 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get screen dimensions for responsiveness
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 50),
+            SizedBox(height: screenHeight * 0.06), // Responsive spacing
             Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back), // Back button icon
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: screenWidth * 0.07, // Responsive icon size
+                  ),
                   onPressed: () {
-                    Navigator.pop(context); // Navigate back
+                    Navigator.pop(context);
                   },
                 ),
                 Expanded(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.only(right: 12.0), // Right-side margin
+                    padding: EdgeInsets.only(
+                        right: screenWidth * 0.03), // Responsive margin
                     child: TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
                         hintText: 'Search here...',
                         contentPadding: EdgeInsets.symmetric(
-                            vertical: 10.0), // Reduce height
+                          vertical: screenHeight *
+                              0.015, // Responsive vertical padding
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(color: AppColors.primaryColor),
@@ -66,10 +74,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide(color: AppColors.primaryColor),
                         ),
-                        prefixIcon: Icon(Icons.search),
+                        prefixIcon: Icon(Icons.search,
+                            size: screenWidth * 0.06), // Responsive icon
                         suffixIcon: _searchController.text.isNotEmpty
                             ? IconButton(
-                                icon: Icon(Icons.clear),
+                                icon:
+                                    Icon(Icons.clear, size: screenWidth * 0.06),
                                 onPressed: () {
                                   setState(() {
                                     _searchController.clear();
@@ -79,7 +89,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             : null, // Cross button
                       ),
                       onChanged: (value) {
-                        setState(() {}); // Trigger suffix icon update
+                        setState(() {});
                       },
                       onSubmitted: (value) => _handleSearch(),
                     ),
@@ -87,31 +97,36 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: screenHeight * 0.02), // Responsive spacing
             if (recentSearches.isNotEmpty) ...[
               Text(
                 'Recent Searches',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: screenWidth * 0.045, // Responsive font size
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: screenHeight * 0.01),
               Expanded(
                 child: ListView.builder(
                   itemCount: recentSearches.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text(recentSearches[index]),
+                      title: Text(
+                        recentSearches[index],
+                        style: TextStyle(
+                            fontSize:
+                                screenWidth * 0.04), // Responsive font size
+                      ),
                       leading: Image.asset(
                         'lib/assets/search.png', // Replace with your asset path
-                        width: 24, // Adjust width as needed
-                        height: 24, // Adjust height as needed
+                        width: screenWidth * 0.06, // Responsive image width
+                        height: screenHeight * 0.03, // Responsive image height
                       ),
                       trailing: Image.asset(
                         'lib/assets/search_arrow.png', // Replace with your asset path
-                        width: 24, // Adjust width as needed
-                        height: 24, // Adjust height as needed
+                        width: screenWidth * 0.06, // Responsive image width
+                        height: screenHeight * 0.03, // Responsive image height
                       ),
                       onTap: () {
                         setState(() {
@@ -127,18 +142,23 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: Center(
                   child: Text(
                     'No recent searches available',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize:
+                          screenWidth * 0.0405, // Reduced by 10% (0.045 * 0.9)
+                    ),
                   ),
                 ),
               ),
             ],
             Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+              padding: EdgeInsets.only(
+                  bottom: screenHeight * 0.024), // Increased padding by 20%
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
-                  width: double.infinity,
-                  height: 50,
+                  width: double.infinity, // Full-width button
+                  height:
+                      screenHeight * 0.056, // Decreased button height by 20%
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -148,25 +168,31 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       );
                     },
-                    child: Text('Track your order'),
+                    child: Text(
+                      'Track your order',
+                      style: TextStyle(
+                        fontSize:
+                            screenWidth * 0.036, // Decreased text size by 20%
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(
+                        vertical: screenHeight *
+                            0.012, // Decreased vertical padding by 20%
+                        horizontal: screenWidth *
+                            0.08, // Decreased horizontal padding by 20%
+                      ),
                       backgroundColor: AppColors.primaryColor,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30.0, vertical: 10.0),
-                      minimumSize: const Size(330, 50),
+                      foregroundColor: Colors.white,
                       elevation: 5.0,
-                    ).copyWith(
-                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),

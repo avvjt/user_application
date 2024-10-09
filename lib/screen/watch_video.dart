@@ -10,15 +10,14 @@ class WatchVideo extends StatefulWidget {
 
 class _WatchVideoState extends State<WatchVideo> {
   late VideoPlayerController _controller;
-  List<int> _quantities = List.generate(3, (index) => 0); // Quantity for each product
+  List<int> _quantities = List.generate(3, (index) => 0);
   final TextEditingController _commentController = TextEditingController();
   final List<Comment> _comments = [];
 
-  // Static description text
   final String _description =
       "This is a sample description that is quite long and will be shown partially until the user clicks 'Show More'.";
 
-  bool _showFullDescription = false; // Control the visibility of the full description
+  bool _showFullDescription = false;
 
   @override
   void initState() {
@@ -51,6 +50,9 @@ class _WatchVideoState extends State<WatchVideo> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: null,
       body: SingleChildScrollView(
@@ -66,95 +68,106 @@ class _WatchVideoState extends State<WatchVideo> {
                   ? VideoPlayer(_controller)
                   : Center(child: CircularProgressIndicator()),
             ),
-            SizedBox(height: 16),
+            SizedBox(height: screenHeight * 0.02),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Video Title Text with Padding
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: EdgeInsets.only(left: screenWidth * 0.05),
                   child: Text(
                     "Vegetable salad | Healthy Diet",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: screenWidth * 0.045,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: screenHeight * 0.01),
 
                 // Username and Video Information
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
-                      child: CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.grey,
-                        child: ClipOval(
-                          child: Image.asset(
-                            'lib/assets/profile_image.png',
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 8),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Abhi",
-                            style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 16,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            "60 k views • 2 days ago",
-                            style: TextStyle(
-                              color: AppColors.hint,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+// Username and Video Information
+Row(
+  crossAxisAlignment: CrossAxisAlignment.center, // Align items vertically centered
+  children: [
+    Padding(
+      padding: EdgeInsets.only(left: screenWidth * 0.04),
+      child: CircleAvatar(
+        radius: screenWidth * 0.1, // Adjusted for responsiveness
+        backgroundColor: Colors.transparent, // Set to transparent
+        child: ClipOval(
+          child: Image.asset(
+            'lib/assets/profile_image.png',
+            width: screenWidth * 0.1,
+            height: screenWidth * 0.1,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    ),
+    SizedBox(width: screenWidth * 0.016), // Reduced spacing by 20%
+    Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start, // Align text to the start
+        children: [
+          Text(
+            "Abhi",
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              fontSize: screenWidth * 0.04,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            "60 k views • 2 days ago",
+            style: TextStyle(
+              color: AppColors.hint,
+              fontSize: screenWidth * 0.035,
+            ),
+          ),
+        ],
+      ),
+    ),
+  ],
+),
+
+
+
+
               ],
             ),
 
             // Description Section
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(screenWidth * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Description',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: screenHeight * 0.01),
                   Text(
                     _showFullDescription
                         ? _description
                         : (_description.length > 50
                             ? '${_description.substring(0, 50)}...'
                             : _description),
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black),
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: screenHeight * 0.01),
                   TextButton(
                     onPressed: () {
                       setState(() {
@@ -165,8 +178,8 @@ class _WatchVideoState extends State<WatchVideo> {
                       _showFullDescription ? 'Show Less...' : '...See More',
                       style: TextStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.bold, 
-                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        fontSize: screenWidth * 0.04,
                       ),
                     ),
                     style: TextButton.styleFrom(
@@ -179,15 +192,17 @@ class _WatchVideoState extends State<WatchVideo> {
 
             // Comment Section
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(screenWidth * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Comments',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: screenWidth * 0.045,
+                        fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: screenHeight * 0.01),
                   // Comment Input Field
                   Container(
                     decoration: BoxDecoration(
@@ -208,7 +223,12 @@ class _WatchVideoState extends State<WatchVideo> {
                       decoration: InputDecoration(
                         hintText: 'Add a comment...',
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.all(16),
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: screenHeight *
+                              0.02, // Responsive vertical padding
+                          horizontal: screenWidth *
+                              0.04, // Responsive horizontal padding
+                        ),
                       ),
                       onSubmitted: (value) {
                         _addComment();
@@ -230,7 +250,8 @@ class _WatchVideoState extends State<WatchVideo> {
                         title: Text(comment.commentText),
                         subtitle: Text(
                           "${comment.postedDate.hour}:${comment.postedDate.minute} on ${comment.postedDate.day}/${comment.postedDate.month}/${comment.postedDate.year}",
-                          style: TextStyle(fontSize: 12.0, color: Colors.grey),
+                          style: TextStyle(
+                              fontSize: screenWidth * 0.03, color: Colors.grey),
                         ),
                       );
                     },
@@ -241,10 +262,11 @@ class _WatchVideoState extends State<WatchVideo> {
 
             // Product List
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(screenWidth * 0.04),
               child: Text(
                 'Recommended Products',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: screenWidth * 0.045, fontWeight: FontWeight.bold),
               ),
             ),
 
@@ -259,104 +281,78 @@ class _WatchVideoState extends State<WatchVideo> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProductDescription(index: index)),
+                            builder: (context) =>
+                                ProductDescription(index: index)),
                       );
                     },
                     child: _buildProductCard(index), // Your product card
                   );
                 }),
               ),
+              
             ),
+            SizedBox(height:30),
           ],
         ),
       ),
     );
   }
 
-  // Function to build each product card
   Widget _buildProductCard(int index) {
     return Container(
-      width: 150,
-      margin: EdgeInsets.symmetric(horizontal: 2),
+      width: MediaQuery.of(context).size.width *
+          0.4, // Responsive width based on screen size
+      margin: EdgeInsets.symmetric(horizontal: 5), // Adjusted margin
       child: Column(
         children: [
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
               // Rounded Product image
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15.0),
-                child: Image.asset(
-                  'lib/assets/product_description.png',
-                  height: 140,
-                  width: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
+ClipRRect(
+  borderRadius: BorderRadius.circular(15.0),
+  child: Image.asset(
+    'lib/assets/product_description.png',
+    height: MediaQuery.of(context).size.width * 0.28, // Reduced height (20% less than 0.35)
+    width: MediaQuery.of(context).size.width * 0.32, // Reduced width (20% less than 0.4)
+    fit: BoxFit.cover,
+  ),
+),
+
               // Overlapping Add button
               Positioned(
-                bottom: 0,
-                child: _quantities[index] == 0
-                    ? ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            _quantities[index] = 1; // Start with quantity 1
-                          });
-                        },
-                        child: Text(
-                          'Add',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                        ),
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () {
-                              setState(() {
-                                if (_quantities[index] > 0) {
-                                  _quantities[index]--;
-                                }
-                              });
-                            },
-                          ),
-                          Text(
-                            '${_quantities[index]}',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              setState(() {
-                                _quantities[index]++;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
+                bottom: 0, // Aligns to the bottom of the image
+                child: Container(
+                  width: MediaQuery.of(context).size.width *
+                      0.4, // Match the image width
+                  height: 40, // Fixed height for the button
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(15)),
+                    border: Border.all(color: Colors.yellow),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      // Add product to cart or handle add logic
+                    },
+                    child: Text(
+                      'Add',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
+          // Product Info
           SizedBox(height: 8),
           Text(
-            'Product Name',
+            'Product Title',
             style: TextStyle(fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
           ),
           SizedBox(height: 4),
-          Text(
-            '\$10.99',
-            style: TextStyle(color: AppColors.primaryColor),
-            textAlign: TextAlign.center,
-          ),
+          Text('Description here'),
         ],
       ),
     );

@@ -21,57 +21,56 @@ class _ProductListState extends State<ProductList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(
-          title: 
-           IconButton(
-            icon:
-                Icon(Icons.arrow_back, color: Colors.black), // Back button icon
-            onPressed: () {
-              Navigator.pop(context); // Navigate back to the previous screen
-            },
-          ),
-          backgroundColor:
-              Colors.transparent, // Modify the app bar color if needed
-              foregroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text('Product List'), // Title for the AppBar
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black), // Back button icon
+          onPressed: () {
+            Navigator.pop(context); // Navigate back to the previous screen
+          },
         ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0), // Adding padding around the content
-        child: Column(
-          children: [
-            Material(
-  elevation: 4, // Change this value for more or less elevation
-  borderRadius: BorderRadius.circular(10.0), // Match with TextField border radius for consistency
-  shadowColor: Colors.black.withOpacity(0.2), // Adjust shadow color and opacity if needed
-  child: TextField(
-    onChanged: (value) {
-      _handleSearch(value); // Handle the search input
-    },
-    decoration: InputDecoration(
-      labelText: 'Search', // Placeholder text
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0), // Slightly curved edges
-        borderSide: BorderSide(
-          color: Colors.green, // Change this to your desired border color
-        ),
+        backgroundColor: Colors.transparent, // Modify the app bar color if needed
+        foregroundColor: Colors.black,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10.0), // Keep the same curve when focused
-        borderSide: BorderSide(
-          color: Colors.green, // Change this to your desired border color when focused
-          width: 2.0, // Make the border thicker when focused
-        ),
-      ),
-      prefixIcon: Icon(Icons.search), // Add a search icon
-    ),
-  ),
-),
+      body: SingleChildScrollView( // Wrap with SingleChildScrollView for scrolling
+        child: Padding(
+          padding: const EdgeInsets.all(16.0), // Adding padding around the content
+          child: Column(
+            children: [
+              Material(
+                elevation: 4, // Change this value for more or less elevation
+                borderRadius: BorderRadius.circular(10.0), // Match with TextField border radius for consistency
+                shadowColor: Colors.black.withOpacity(0.2), // Adjust shadow color and opacity if needed
+                child: SizedBox(
+                  height: 48, // Adjust the height (10% smaller than a standard TextField)
+                  child: TextField(
+                    onChanged: (value) {
+                      _handleSearch(value); // Handle the search input
+                    },
+                    decoration: InputDecoration(
+                      labelText: 'Search', // Placeholder text
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Slightly curved edges
+                        borderSide: BorderSide(
+                          color: Colors.green, // Change this to your desired border color
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0), // Keep the same curve when focused
+                        borderSide: BorderSide(
+                          color: Colors.green, // Change this to your desired border color when focused
+                          width: 2.0, // Make the border thicker when focused
+                        ),
+                      ),
+                      prefixIcon: Icon(Icons.search), // Add a search icon
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20), // Spacing between search bar and product
 
-
-            SizedBox(height: 20), // Spacing between search bar and product
-
-            // Product Grid
-            Expanded(
-              child: GridView.builder(
+              // Product Grid
+              GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // 2 items per row
                   childAspectRatio: 0.75, // Adjust to control the height of the items
@@ -79,12 +78,14 @@ class _ProductListState extends State<ProductList> {
                   mainAxisSpacing: 10,
                 ),
                 itemCount: 6, // Number of products (you can update this as per your data)
+                shrinkWrap: true, // Allow the GridView to take the height it needs
+                physics: NeverScrollableScrollPhysics(), // Disable GridView's own scroll
                 itemBuilder: (context, index) {
                   return _buildProductCard(index); // Build each product item
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
