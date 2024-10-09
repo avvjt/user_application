@@ -5,6 +5,9 @@ import 'package:user_application/screen/home.dart';
 class ChoosePlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Get the size of the screen
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false, // Removes the back button
@@ -15,7 +18,7 @@ class ChoosePlan extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content vertically
+              MainAxisAlignment.center, // Center the content vertically
           children: [
             const Text(
               'Choose Plan',
@@ -26,16 +29,13 @@ class ChoosePlan extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            // First Row (Two items side by side)
+            // Centered Row with a single item
             Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceEvenly, // Space items evenly
+              mainAxisAlignment: MainAxisAlignment.center, // Center item horizontally
               children: [
-                // First Item (Rounded Box) with GestureDetector to navigate to another page
-
                 Container(
-                  width: 206, // Set a fixed width
-                  height: 370, // Set a fixed height
+                  width: size.width * 0.9, // Set a responsive width (90% of screen width)
+                  height: size.height * 0.5, // Set a responsive height (50% of screen height)
                   child: GestureDetector(
                     onTap: () {
                       // Navigate to another page when tapped
@@ -72,169 +72,7 @@ class ChoosePlan extends StatelessWidget {
                                 TextSpan(
                                   text: 'Unlock Unlimited Recipe Videos with ',
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: 'Basic',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '\$0',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '/month',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                ...List.generate(3, (index) {
-                                  final featureTexts = [
-                                    'Limited recipe video access',
-                                    'Standard Delivery Options',
-                                    'Limited Discounts',
-                                  ];
-
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Image.asset(
-                                          'lib/assets/green_tick.png',
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Expanded(
-                                          child: Container(
-                                            constraints: BoxConstraints(
-                                              maxWidth: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  70,
-                                            ),
-                                            child: Text(
-                                              featureTexts[index],
-                                              style: TextStyle(fontSize: 14),
-                                              maxLines: 2,
-                                              overflow: TextOverflow.clip,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                                SizedBox(height: 20),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 2.0),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      // Add your button action here
-                                      // Navigate to another page when tapped
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Fragment(), // Placeholder for new page
-                                        ),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryColor,
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12, horizontal: 20),
-                                    ),
-                                    child: Text(
-                                      'Choose Basic',
-                                      style: TextStyle(fontSize: 13),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                Container(
-                  width: 206, // Set a fixed width
-                  height: 370, // Set a fixed height
-                  child: GestureDetector(
-                    onTap: () {
-                      // Navigate to another page when tapped
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              Fragment(), // Placeholder for new page
-                        ),
-                      );
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(20),
-                      margin: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: AppColors.lightGreen,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.4),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'Unlock Unlimited Recipe Videos with ',
-                                  style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: size.width * 0.04, // Adjust font size based on width
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
                                   ),
@@ -242,7 +80,7 @@ class ChoosePlan extends StatelessWidget {
                                 TextSpan(
                                   text: 'Premium',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: size.width * 0.04, // Adjust font size based on width
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.primaryColor,
                                   ),
@@ -257,7 +95,7 @@ class ChoosePlan extends StatelessWidget {
                                 TextSpan(
                                   text: '\$5',
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: size.width * 0.06, // Adjust font size based on width
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -265,7 +103,7 @@ class ChoosePlan extends StatelessWidget {
                                 TextSpan(
                                   text: '/month',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: size.width * 0.04, // Adjust font size based on width
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -285,29 +123,24 @@ class ChoosePlan extends StatelessWidget {
                                   ];
 
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
+                                    padding: const EdgeInsets.symmetric(vertical: 8.0),
                                     child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Image.asset(
                                           'lib/assets/green_tick.png',
-                                          width: 24,
-                                          height: 24,
+                                          width: size.width * 0.06, // Adjust width based on screen size
+                                          height: size.width * 0.06, // Adjust height based on screen size
                                         ),
                                         SizedBox(width: 5),
                                         Expanded(
                                           child: Container(
                                             constraints: BoxConstraints(
-                                              maxWidth: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  70,
+                                              maxWidth: size.width - 70,
                                             ),
                                             child: Text(
                                               featureTexts[index],
-                                              style: TextStyle(fontSize: 14),
+                                              style: TextStyle(fontSize: size.width * 0.035), // Adjust font size based on width
                                               maxLines: 2,
                                               overflow: TextOverflow.clip,
                                             ),
@@ -317,9 +150,9 @@ class ChoosePlan extends StatelessWidget {
                                     ),
                                   );
                                 }),
+                                SizedBox(height: 20),
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 2.0),
+                                  padding: const EdgeInsets.symmetric(vertical: 2.0),
                                   child: ElevatedButton(
                                     onPressed: () {
                                       // Add your button action here
@@ -343,7 +176,7 @@ class ChoosePlan extends StatelessWidget {
                                     ),
                                     child: Text(
                                       'Choose Premium',
-                                      style: TextStyle(fontSize: 13),
+                                      style: TextStyle(fontSize: size.width * 0.035), // Adjust font size based on width
                                     ),
                                   ),
                                 ),
@@ -357,167 +190,7 @@ class ChoosePlan extends StatelessWidget {
                 ),
               ],
             ),
-
-            SizedBox(height: 20), // Spacing between rows
-
-            // Second Row (Only one item)
-Row(
-  mainAxisAlignment: MainAxisAlignment.center, // Center the single item
-  children: [
-    // Single Item (Rounded Box)
-    Flexible(
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        child: GestureDetector(
-          onTap: () {
-            // Navigate to another page when tapped
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Fragment(), // Placeholder for new page
-              ),
-            );
-          },
-          child: Container(
-            padding: EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: AppColors.lightGreen,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.4),
-                  spreadRadius: 3,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Unlock Unlimited Recipe Videos with ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Business',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '\$75',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '/month',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ...List.generate(3, (index) {
-                        final featureTexts = [
-                          'Unlimited recipe video access',
-                          'Exclusive offers on Grocery Products',
-                          'Unlimited Discounts',
-                        ];
-
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(
-                                'lib/assets/green_tick.png',
-                                width: 24,
-                                height: 24,
-                              ),
-                              SizedBox(width: 5),
-                              Expanded(
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                    maxWidth: MediaQuery.of(context).size.width - 70,
-                                  ),
-                                  child: Text(
-                                    featureTexts[index],
-                                    style: TextStyle(fontSize: 14),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.clip,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2.0),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Navigate to another page when tapped
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Fragment(), // Placeholder for new page
-                              ),
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                          ),
-                          child: Text(
-                            'Choose Business',
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ),
-  ],
-),
-
+            SizedBox(height: 20), // Spacing below the row
           ],
         ),
       ),

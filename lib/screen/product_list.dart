@@ -117,9 +117,7 @@ class _ProductListState extends State<ProductList> {
                 child: _quantities[index] == 0
                     ? ElevatedButton(
                         onPressed: () {
-                          setState(() {
-                            _quantities[index] = 1; // Start with quantity 1
-                          });
+                          Navigator.pop(context);
                         },
                         child: Text(
                           'Add',

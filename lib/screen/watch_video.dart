@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:user_application/constants/colors.dart';
+import 'package:user_application/screen/home.dart';
 import 'package:user_application/screen/product_description.dart';
 import 'package:video_player/video_player.dart';
 
@@ -54,7 +55,34 @@ class _WatchVideoState extends State<WatchVideo> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: null,
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(
+              screenHeight * 0.09), // Responsive height for AppBar
+          child: AppBar(
+            title: Text(
+              '',
+              style: TextStyle(
+                fontSize:
+                    screenWidth * 0.045, // Responsive font size for the title
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back,
+                  color: Colors.black,
+                  size: screenWidth * 0.06), // Responsive icon size
+              onPressed: () {
+                Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => Fragment()),
+);
+              },
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0, // Remove shadow
+          ),
+        ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

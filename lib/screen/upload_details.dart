@@ -156,28 +156,37 @@ class _UploadDetailsState extends State<UploadDetails> {
             ),
             SizedBox(height: screenHeight * 0.02),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => OrderSuccessful()),
-                );
-              },
-              child: Text(
-                'Upload Video',
-                style: TextStyle(fontSize: screenWidth * 0.04),
-              ),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                  vertical: screenHeight * 0.02,
-                  horizontal: screenWidth * 0.1,
-                ),
-                backgroundColor: AppColors.primaryColor,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(screenWidth * 0.06),
-                ),
-              ),
-            ),
+  onPressed: () {
+    // Show Snackbar when the button is pressed
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Video is uploaded"),
+        duration: Duration(seconds: 2), // Duration the Snackbar is visible
+        behavior: SnackBarBehavior.floating, // Make the Snackbar float
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Rounded corners
+        ),
+      ),
+    );
+
+  },
+  child: Text(
+    'Upload Video',
+    style: TextStyle(fontSize: screenWidth * 0.04),
+  ),
+  style: ElevatedButton.styleFrom(
+    padding: EdgeInsets.symmetric(
+      vertical: screenHeight * 0.02,
+      horizontal: screenWidth * 0.1,
+    ),
+    backgroundColor: AppColors.primaryColor,
+    foregroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(screenWidth * 0.06),
+    ),
+  ),
+),
+
             SizedBox(height: screenHeight * 0.04),
           ],
         ),

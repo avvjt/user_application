@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:user_application/constants/colors.dart';
 import 'package:user_application/screen/cart.dart';
+import 'package:user_application/screen/watch_video.dart';
 
 class ProductDescription extends StatefulWidget {
   final int index;
@@ -22,7 +23,25 @@ class _ProductDescriptionState extends State<ProductDescription> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: null,
+      appBar: PreferredSize(
+  preferredSize: Size.fromHeight(screenHeight * 0.04 ), // Reduced height for AppBar
+  child: AppBar(
+    title: null, // Set title to null since you only want the back button
+    leading: IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        color: Colors.black,
+        size: screenWidth * 0.06, // Responsive icon size
+      ),
+      onPressed: () {
+        Navigator.pop(context); // Go back to the previous screen
+      },
+    ),
+    backgroundColor: Colors.transparent,
+    elevation: 0, // Remove shadow
+  ),
+),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0),
@@ -195,8 +214,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       'This description explains everything about the product in detail.';
 
                   final textWidget = Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.04),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                     child: Text(
                       descriptionText,
                       maxLines: isExpanded ? null : 2,
@@ -255,7 +274,8 @@ class _ProductDescriptionState extends State<ProductDescription> {
               SizedBox(height: screenHeight * 0.02),
 
               Container(
-                height: screenHeight * 0.25, // Adjusted height for responsiveness
+                height:
+                    screenHeight * 0.25, // Adjusted height for responsiveness
                 padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -276,32 +296,45 @@ class _ProductDescriptionState extends State<ProductDescription> {
                             ),
                           ),
                           ElevatedButton(
-  onPressed: () {
-    // Add to Cart action
-  },
-  child: Text(
-    'Add',
-    style: TextStyle(
-      fontSize: screenWidth * 0.04, // Responsive text size
-    ),
-  ),
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.white,
-    foregroundColor: Colors.black,
-    padding: EdgeInsets.symmetric(
-      vertical: screenHeight * 0.015, // Responsive vertical padding
-      horizontal: screenWidth * 0.05, // Responsive horizontal padding
-    ),
-    side: BorderSide(
-      color: Colors.yellow,
-      width: screenWidth * 0.005, // Responsive border width
-    ),
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(screenWidth * 0.02), // Responsive border radius
-    ),
-  ),
-),
+                            onPressed: () {
+                              // Add to Cart action
 
+                              // Add to Cart action
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Cart(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Add',
+                              style: TextStyle(
+                                fontSize:
+                                    screenWidth * 0.04, // Responsive text size
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.black,
+                              padding: EdgeInsets.symmetric(
+                                vertical: screenHeight *
+                                    0.015, // Responsive vertical padding
+                                horizontal: screenWidth *
+                                    0.05, // Responsive horizontal padding
+                              ),
+                              side: BorderSide(
+                                color: Colors.yellow,
+                                width: screenWidth *
+                                    0.005, // Responsive border width
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(
+                                    screenWidth *
+                                        0.02), // Responsive border radius
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );
