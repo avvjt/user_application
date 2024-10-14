@@ -1,0 +1,57 @@
+name: user_application
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^2.14.0
+  firebase_auth: ^4.8.1
+  google_sign_in: ^6.2.0
+  http: ^1.2.2
+  cupertino_icons: ^1.0.8
+  font_awesome_flutter: ^10.1.0
+  image_picker: ^0.8.5+3
+  permission_handler: ^11.3.1
+  video_player: ^2.4.5
+  fluttertoast: ^8.0.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/assets/chef.png  # Ensure this path is correct
+    - lib/assets/google_icon.png
+    - lib/assets/facebook_icon.png
+    - lib/assets/home_logo.png
+    - lib/assets/dish_image.png
+    - lib/assets/profile_image.png
+    - lib/assets/done_right.png
+    - lib/assets/product_description.png
+    - lib/assets/green_tick.png
+    - lib/assets/home.png
+    - lib/assets/add.png
+    - lib/assets/profile.png
+    - lib/assets/search.png
+    - lib/assets/cart.png
+    - lib/assets/search_arrow.png
+    - lib/assets/cart_image.png
+    - lib/assets/location.png
+    - lib/assets/logout.png
+    - lib/assets/order_history.png
+    - lib/assets/feedback.png
+    - lib/assets/save_payment.png
+    - lib/assets/your_video.png
+    - lib/assets/location_history.png
+    - lib/assets/track_order.png
+    
