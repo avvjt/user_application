@@ -5,7 +5,6 @@ void main() => runApp(OrderSuccessful());
 class OrderSuccessful extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -59,7 +58,9 @@ class OrderSuccessful extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.015), // Responsive spacing
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05), // Responsive horizontal padding
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                        screenWidth * 0.05), // Responsive horizontal padding
                 child: Center(
                   child: Text(
                     'Thank you for your order. Your order will be delivered within 1-2 days.',

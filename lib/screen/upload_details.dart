@@ -33,13 +33,11 @@ class _UploadDetailsState extends State<UploadDetails> {
     String description = _descriptionController.text;
     String ingredients = _ingredientsController.text;
 
-    // Prepare the request to upload video details
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
-          'http://10.0.2.2/user_app_api/upload_video.php'), // Replace with your PHP upload script URL
+          'https://bypriyan.com/userapp-api/uploadvideo.php'), // Replace with your PHP upload script URL
     );
-
     // Add video file
     request.files
         .add(await http.MultipartFile.fromPath('video', widget.videoFile.path));
