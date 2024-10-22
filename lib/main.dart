@@ -16,12 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Italian Cooking Classes',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: ChoosePlan()
-        // home: LoginScreen(), // Starting point of the app
-        );
+      title: 'Italian Cooking Classes',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      // home: ChoosePlan()
+      home: LoginScreen(), // Starting point of the app
+    );
   }
 }

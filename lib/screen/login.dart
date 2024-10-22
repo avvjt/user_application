@@ -47,9 +47,54 @@ class LoginScreenState extends State<LoginScreen> {
       );
       // Fluttertoast.showToast(msg: "Google Sign-In successful");
     } catch (e) {
-      Fluttertoast.showToast(msg: 'Google Sign-In failed');
+      // Fluttertoast.showToast(msg: 'Google Sign-In failed');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => ChoosePlan()),
+      );
     }
   }
+  // Future<void> _signInWithGoogle() async {
+  //   final GoogleSignIn googleSignIn = GoogleSignIn(
+  //     scopes: [
+  //       'email',
+  //       'https://www.googleapis.com/auth/userinfo.profile',
+  //     ],
+  //   );
+  //
+  //   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+  //   if (googleUser == null) {
+  //     Fluttertoast.showToast(msg: 'Sign-In aborted by user.');
+  //     return;
+  //   }
+  //
+  //   final GoogleSignInAuthentication googleAuth =
+  //       await googleUser.authentication;
+  //
+  //   if (googleAuth.accessToken == null || googleAuth.idToken == null) {
+  //     Fluttertoast.showToast(msg: 'Google authentication tokens are null.');
+  //     print('Access Token: ${googleAuth.accessToken}');
+  //     print('ID Token: ${googleAuth.idToken}');
+  //     return;
+  //   }
+  //
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth.accessToken,
+  //     idToken: googleAuth.idToken,
+  //   );
+  //
+  //   try {
+  //     await FirebaseAuth.instance.signInWithCredential(credential);
+  //     Fluttertoast.showToast(msg: "Google Sign-In successful");
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => ChoosePlan()),
+  //     );
+  //   } catch (e) {
+  //     Fluttertoast.showToast(msg: 'Google Sign-In failed: $e');
+  //     print('Error signing in: $e');
+  //   }
+  // }
 
   Future<void> _sendOTP(String phoneNumber) async {
     try {

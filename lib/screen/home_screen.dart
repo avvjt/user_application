@@ -22,14 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void fetchVideos() async {
-    // Replace with your API endpoint
     var response = await http
         .get(Uri.parse('https://bypriyan.com/userapp-api/fetchvideo.php'));
 
     if (response.statusCode == 200) {
       setState(() {
-        videos = json.decode(response.body)[
-            'videos']; // Assuming 'videos' is a list in the API response
+        videos = json.decode(response.body)['videos'];
       });
     } else {
       print('Failed to load videos');
@@ -44,13 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: null,
       body: Column(
         children: [
-          // Row with Icon and Text
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Logo from assets
                 Image.asset(
                   'lib/assets/home_logo.png',
                   width: screenWidth * 0.15,
@@ -105,19 +101,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
-          // Dynamic video list
           Expanded(
             child: ListView.builder(
-              itemCount: videos.length, // Use the length of the videos list
+              itemCount: videos.length,
               itemBuilder: (context, index) {
                 return VideoTile(
                   screenWidth: screenWidth,
-                  videoUrl: videos[index]
-                      ['video_url'], // Fetch video URL dynamically
-                  title: videos[index]['title'], // Fetch title dynamically
-                  description: videos[index]
-                      ['description'], // Fetch description dynamically
+                  videoUrl: videos[index]['video_url'],
+                  title: videos[index]['title'],
+                  description: videos[index]['description'],
                 );
               },
             ),
@@ -155,13 +147,12 @@ class _VideoTileState extends State<VideoTile> {
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {}); // Update the UI once the video is initialized
-        // _controller.play(); // Start playing the video immediately
       });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Dispose of the controller when not needed
+    _controller.dispose();
     super.dispose();
   }
 
@@ -172,80 +163,85 @@ class _VideoTileState extends State<VideoTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Video player widget
-          Container(
-            height: widget.screenWidth * 0.5,
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : Center(
-                    child:
-                        CircularProgressIndicator()), // Show loading indicator while initializing
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WatchVideo(
+                    videoUrl: widget.videoUrl,
+                    title: widget.title,
+                    description: widget.description,
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              height: widget.screenWidth * 0.5,
+              child: _controller.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )
+                  : Center(child: CircularProgressIndicator()),
+            ),
           ),
           SizedBox(height: 8),
-          Column(
+          Padding(
+            padding: const EdgeInsets.only(left: 14.0),
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: widget.screenWidth * 0.045,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          SizedBox(height: 8),
+          Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Video title
               Padding(
-                padding: const EdgeInsets.only(left: 14.0),
-                child: Text(
-                  widget.title, // Display dynamic video title
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: widget.screenWidth * 0.045,
+                padding: const EdgeInsets.only(left: 16.0),
+                child: CircleAvatar(
+                  radius: 20,
+                  backgroundColor: Colors.grey,
+                  child: ClipOval(
+                    child: Image.asset(
+                      'lib/assets/profile_image.png',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              SizedBox(height: 8),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundColor: Colors.grey,
-                      child: ClipOval(
-                        child: Image.asset(
-                          'lib/assets/profile_image.png',
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                        ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Abhi",
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: widget.screenWidth * 0.04,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      widget.description,
+                      style: TextStyle(
+                        color: AppColors.hint,
+                        fontSize: widget.screenWidth * 0.035,
                       ),
                     ),
-                  ),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Abhi", // Static username (can be dynamic)
-                          style: TextStyle(
-                            fontWeight: FontWeight.normal,
-                            fontSize: widget.screenWidth * 0.04,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          widget.description, // Dynamic video description
-                          style: TextStyle(
-                            color: AppColors.hint,
-                            fontSize: widget.screenWidth * 0.035,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
