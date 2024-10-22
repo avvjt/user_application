@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_application/constants/colors.dart';
 import 'choose_plan.dart';
 import 'otp_verification.dart';
@@ -29,6 +30,31 @@ class LoginScreenState extends State<LoginScreen> {
     return phoneRegExp.hasMatch(phoneNumber);
   }
 
+  // Future<void> _signInWithGoogle() async {
+  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //   final GoogleSignInAuthentication googleAuth =
+  //       await googleUser!.authentication;
+  //
+  //   final credential = GoogleAuthProvider.credential(
+  //     accessToken: googleAuth.accessToken,
+  //     idToken: googleAuth.idToken,
+  //   );
+  //
+  //   try {
+  //     await FirebaseAuth.instance.signInWithCredential(credential);
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => ChoosePlan()),
+  //     );
+  //     // Fluttertoast.showToast(msg: "Google Sign-In successful");
+  //   } catch (e) {
+  //     // Fluttertoast.showToast(msg: 'Google Sign-In failed');
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => ChoosePlan()),
+  //     );
+  //   }
+  // }
   Future<void> _signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication googleAuth =
@@ -40,7 +66,14 @@ class LoginScreenState extends State<LoginScreen> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      String? userId = userCredential.user?.uid;
+
+      // Store the userId in SharedPreferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('userid', userId!);
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => ChoosePlan()),
@@ -54,54 +87,57 @@ class LoginScreenState extends State<LoginScreen> {
       );
     }
   }
-  // Future<void> _signInWithGoogle() async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn(
-  //     scopes: [
-  //       'email',
-  //       'https://www.googleapis.com/auth/userinfo.profile',
-  //     ],
-  //   );
-  //
-  //   final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-  //   if (googleUser == null) {
-  //     Fluttertoast.showToast(msg: 'Sign-In aborted by user.');
-  //     return;
-  //   }
-  //
-  //   final GoogleSignInAuthentication googleAuth =
-  //       await googleUser.authentication;
-  //
-  //   if (googleAuth.accessToken == null || googleAuth.idToken == null) {
-  //     Fluttertoast.showToast(msg: 'Google authentication tokens are null.');
-  //     print('Access Token: ${googleAuth.accessToken}');
-  //     print('ID Token: ${googleAuth.idToken}');
-  //     return;
-  //   }
-  //
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth.accessToken,
-  //     idToken: googleAuth.idToken,
-  //   );
-  //
+
+  // Future<void> _sendOTP(String phoneNumber) async {
   //   try {
-  //     await FirebaseAuth.instance.signInWithCredential(credential);
-  //     Fluttertoast.showToast(msg: "Google Sign-In successful");
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => ChoosePlan()),
+  //     await _auth.verifyPhoneNumber(
+  //       phoneNumber: '+91$phoneNumber', // Assuming phone number is from India
+  //       verificationCompleted: (PhoneAuthCredential credential) async {
+  //         await _auth.signInWithCredential(credential);
+  //       },
+  //       verificationFailed: (FirebaseAuthException e) {
+  //         Fluttertoast.showToast(msg: 'OTP Verification failed: ${e.message}');
+  //       },
+  //       codeSent: (String verificationId, int? resendToken) {
+  //         setState(() {
+  //           _verificationId = verificationId;
+  //         });
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //             builder: (context) => OtpVerificationScreen(
+  //               phoneNumber: phoneNumber,
+  //               verificationId: _verificationId,
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //       codeAutoRetrievalTimeout: (String verificationId) {
+  //         _verificationId = verificationId;
+  //       },
   //     );
   //   } catch (e) {
-  //     Fluttertoast.showToast(msg: 'Google Sign-In failed: $e');
-  //     print('Error signing in: $e');
+  //     Fluttertoast.showToast(msg: 'Failed to send OTP: $e');
   //   }
   // }
-
   Future<void> _sendOTP(String phoneNumber) async {
     try {
       await _auth.verifyPhoneNumber(
         phoneNumber: '+91$phoneNumber', // Assuming phone number is from India
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
+          UserCredential userCredential =
+              await _auth.signInWithCredential(credential);
+          String? userId = userCredential.user?.uid;
+
+          // Store the userId in SharedPreferences
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('userid', userId!);
+
+          // Navigate to next screen
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => ChoosePlan()),
+          );
         },
         verificationFailed: (FirebaseAuthException e) {
           Fluttertoast.showToast(msg: 'OTP Verification failed: ${e.message}');

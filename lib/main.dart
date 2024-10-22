@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:user_application/screen/choose_plan.dart';
@@ -21,7 +22,19 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: ChoosePlan()
-      home: LoginScreen(), // Starting point of the app
+      // home: LoginScreen(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasData) {
+            return ChoosePlan();
+          } else {
+            return LoginScreen();
+          }
+        },
+      ),
     );
   }
 }

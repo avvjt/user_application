@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:user_application/constants/colors.dart';
+
+import 'login.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -13,7 +17,8 @@ class ProfilePage extends StatelessWidget {
       body: SingleChildScrollView(
         // Enable scrolling
         child: Padding(
-          padding: EdgeInsets.all(screenWidth * 0.045), // Reduced padding by 10%
+          padding:
+              EdgeInsets.all(screenWidth * 0.045), // Reduced padding by 10%
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -28,23 +33,28 @@ class ProfilePage extends StatelessWidget {
                     backgroundImage:
                         NetworkImage('https://example.com/profile.jpg'),
                   ),
-                  SizedBox(width: screenWidth * 0.045), // Reduced spacing by 10%
+                  SizedBox(
+                      width: screenWidth * 0.045), // Reduced spacing by 10%
                   // Name and Title
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: screenHeight * 0.0225), // Reduced spacing by 10%
+                      SizedBox(
+                          height:
+                              screenHeight * 0.0225), // Reduced spacing by 10%
                       Text(
                         'Abhi',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.045, // Reduced font size by 10%
+                          fontSize:
+                              screenWidth * 0.045, // Reduced font size by 10%
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
                         '+ 91-9878675689',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.0405, // Reduced font size by 10%
+                          fontSize:
+                              screenWidth * 0.0405, // Reduced font size by 10%
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[600],
                         ),
@@ -57,7 +67,6 @@ class ProfilePage extends StatelessWidget {
               Divider(color: Colors.grey, thickness: 1.0), // Horizontal Divider
               SizedBox(height: screenHeight * 0.0225), // Reduced spacing by 10%
 
-              // Column of TextViews with Icons
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,10 +89,9 @@ class ProfilePage extends StatelessWidget {
                         msg: "Saved Payment Method clicked!",
                         backgroundColor: AppColors.primaryColor);
                   }, screenWidth),
-                  buildProfileOption('Logout', 'lib/assets/logout.png', () {
-                    Fluttertoast.showToast(
-                        msg: "Logout clicked!",
-                        backgroundColor: AppColors.primaryColor);
+                  buildProfileOption('Logout', 'lib/assets/logout.png',
+                      () async {
+                    await _logout(context); // Call logout function
                   }, screenWidth),
                   buildProfileOption(
                       'Help & Feedback', 'lib/assets/feedback.png', () {
@@ -93,7 +101,7 @@ class ProfilePage extends StatelessWidget {
                   }, screenWidth),
                 ],
               ),
-              SizedBox(height: screenHeight * 0.09), // Reduced bottom spacing by 10%
+              SizedBox(height: screenHeight * 0.09),
             ],
           ),
         ),
@@ -129,10 +137,21 @@ class ProfilePage extends StatelessWidget {
       ],
     );
   }
-}
 
-void main() {
-  runApp(MaterialApp(
-    home: ProfilePage(),
-  ));
+  Future<void> _logout(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userid');
+      Fluttertoast.showToast(
+          msg: "Logged out successfully!",
+          backgroundColor: AppColors.primaryColor);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginScreen()));
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Logout failed. Please try again.",
+          backgroundColor: AppColors.primaryColor);
+    }
+  }
 }
